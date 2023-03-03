@@ -180,6 +180,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameManager\GameManager.h" />
+    <ClInclude Include="src\Object\Player\Player.h" />
+    <ClInclude Include="src\Object\Enemy\Enemy.h" />
     <ClInclude Include="lib\App\app.h" />
     <ClInclude Include="lib\App\AppSettings.h" />
     <ClInclude Include="lib\App\main.h" />
@@ -189,14 +192,21 @@
     <ClInclude Include="lib\App\TextureLoader.h" />
     <ClInclude Include="include\stdafx.h" />
     <ClInclude Include="include\targetver.h" />
+    <ClInclude Include="src\Object\Object.h" />
+    <ClInclude Include="src\Math\Utils.h" />
+    <ClInclude Include="src\UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameManager\GameManager.cpp" />
+    <ClCompile Include="src\Object\Player\Player.cpp" />
+    <ClCompile Include="src\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="lib\App\app.cpp" />
     <ClCompile Include="lib\App\main.cpp" />
     <ClCompile Include="lib\App\SimpleController.cpp" />
     <ClCompile Include="lib\App\SimpleSound.cpp" />
     <ClCompile Include="lib\App\SimpleSprite.cpp" />
     <ClCompile Include="lib\App\TextureLoader.cpp" />
+    <ClCompile Include="src\Object\Object.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="include\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -204,6 +214,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Math\Utils.cpp" />
+    <ClCompile Include="src\UI\UI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
