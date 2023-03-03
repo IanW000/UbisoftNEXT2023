@@ -22,7 +22,7 @@ MouseInput GameManager::getMousePosition()
 
 void GameManager::Init() {
 
-	App::PlaySound(".\\res\\mainMenuBGM.wav", true);
+	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 	UISettings.Init(player);
 }
 

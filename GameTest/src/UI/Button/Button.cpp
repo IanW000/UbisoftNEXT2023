@@ -8,7 +8,7 @@ Button::Button() : x(0), y(0), dx(0), dy(0), textX(0), textY(0), text("INIT"), b
 {
 }
 
-void Button::CreateButton(GLfloat x, GLfloat y, GLfloat dx, GLfloat dy, float textX, float textY, const char* text, Colors buttonColor, ButtonType buttonType)
+void Button::CreateButton(float x, float y, float dx, float dy, float textX, float textY, const char* text, Colors buttonColor, ButtonType buttonType)
 {
 	this->x = x;
 	this->y = y;
@@ -101,7 +101,7 @@ void Button::Render()
 	else {
 
 		if (!hoverPlayedOnce) {
-			App::PlaySound(".\\res\\hover.wav");
+			App::PlaySound(".\\res\\Sound\\hover.wav");
 			hoverPlayedOnce = true;
 		}
 
@@ -111,7 +111,7 @@ void Button::Render()
 
 		if (clicked && !clickedPlayedOnce) {
 			CreateButton(x, y, dx, dy, textX, textY, text, buttonColor, buttonType);
-			App::PlaySound(".\\res\\click.wav");
+			App::PlaySound(".\\res\\Sound\\click.wav");
 			clickedPlayedOnce = true;
 		}
 	}

@@ -51,8 +51,8 @@ void UI::Update(float deltaTime, Player player, bool deadScreen)
 		ExitButton.Update(deltaTime);
 
 		if (StartButton.gameScreen) {
-			App::StopSound(".\\res\\mainMenuBGM.wav");
-			App::PlaySound(".\\res\\inGameBGM.wav", true);
+			App::StopSound(".\\res\\Sound\\mainMenuBGM.wav");
+			App::PlaySound(".\\res\\Sound\\inGameBGM.wav", true);
 			setCurrentScreen(Screens::GAME);
 			StartButton.gameScreen = false;
 		}
@@ -87,8 +87,8 @@ void UI::Update(float deltaTime, Player player, bool deadScreen)
 		ResumeButton.Update(deltaTime);
 
 		if (BackButtonInGame.backToMainScreen) {
-			App::StopSound(".\\res\\inGameBGM.wav");
-			App::PlaySound(".\\res\\mainMenuBGM.wav", true);
+			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 			setCurrentScreen(Screens::MAINMENU);
 			BackButtonInGame.backToMainScreen = false;
 		}
@@ -104,8 +104,8 @@ void UI::Update(float deltaTime, Player player, bool deadScreen)
 		BackButtonInGame.Update(deltaTime);
 
 		if (!failSFXPlayedOnce) {
-			App::StopSound(".\\res\\inGameBGM.wav");
-			App::PlaySound(".\\res\\fail.wav");
+			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+			App::PlaySound(".\\res\\Sound\\fail.wav");
 			failSFXPlayedOnce = true;
 		}
 
@@ -113,7 +113,7 @@ void UI::Update(float deltaTime, Player player, bool deadScreen)
 			//we cannot player variable here?
 			player.currentHP = 100;
 			player.died = false;
-			App::PlaySound(".\\res\\mainMenuBGM.wav", true);
+			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 			setCurrentScreen(Screens::MAINMENU);
 			BackButtonInGame.backToMainScreen = false;
 			failSFXPlayedOnce = false;
@@ -125,8 +125,8 @@ void UI::Update(float deltaTime, Player player, bool deadScreen)
 		//ResumeButton.Update(deltaTime);
 
 		//if (BackButtonInGame.backToMainScreen) {
-		//	App::StopSound(".\\res\\inGameBGM.wav");
-		//	App::PlaySound(".\\res\\mainMenuBGM.wav", true);
+		//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+		//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 		//	setCurrentScreen(Screens::MAINMENU);
 		//	BackButtonInGame.backToMainScreen = false;
 		//}
@@ -146,7 +146,8 @@ void UI::Render()
 
 	case Screens::MAINMENU:
 
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 40, 0.5f * APP_INIT_WINDOW_HEIGHT + 200, "BOMB! BOMB! BOMB!", 1.0f, .25f, .5f, GLUT_BITMAP_TIMES_ROMAN_24, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 40, 0.5f * APP_INIT_WINDOW_HEIGHT + 120, "BOMB! BOMB! BOMB!", 1.0f, .25f, .5f, GLUT_BITMAP_TIMES_ROMAN_24, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 42, 0.5f * APP_INIT_WINDOW_HEIGHT + 122, "BOMB! BOMB! BOMB!", 1.0f, 1.0f, 0.0f, GLUT_BITMAP_TIMES_ROMAN_24, true);
 
 		StartButton.CreateButton((GLfloat)-0.1, (GLfloat)0.1, (GLfloat)0.1, (GLfloat)0.2, 0.5f * APP_INIT_WINDOW_WIDTH - 20, 0.5f * APP_INIT_WINDOW_HEIGHT + 52, "Start", Colors::Pink, ButtonType::START);
 		ControlsButton.CreateButton((GLfloat)-0.1, (GLfloat)-0.05, (GLfloat)0.1, (GLfloat)0.05, 0.5f * APP_INIT_WINDOW_WIDTH - 34, 0.5f * APP_INIT_WINDOW_HEIGHT - 5, "Controls", Colors::Pink, ButtonType::CONTROLS);
@@ -159,14 +160,16 @@ void UI::Render()
 
 	case Screens::CONTROLS:
 
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 40, 0.5f * APP_INIT_WINDOW_HEIGHT + 200, "BOMB! BOMB! BOMB!", 1.0f, .25f, .5f, GLUT_BITMAP_TIMES_ROMAN_24, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 40, 0.5f * APP_INIT_WINDOW_HEIGHT + 120, "BOMB! BOMB! BOMB!", 1.0f, .25f, .5f, GLUT_BITMAP_TIMES_ROMAN_24, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 42, 0.5f * APP_INIT_WINDOW_HEIGHT + 122, "BOMB! BOMB! BOMB!", 1.0f, 1.0f, 0.0f, GLUT_BITMAP_TIMES_ROMAN_24, true);
 
 		BackButton.CreateButton((GLfloat)0.8, (GLfloat)0.8, (GLfloat)0.9, (GLfloat)0.9, 0.5f * APP_INIT_WINDOW_WIDTH + 430, 0.5f * APP_INIT_WINDOW_HEIGHT + 320, "X", Colors::Pink, ButtonType::BACK);
 
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH, 0.5f * APP_INIT_WINDOW_HEIGHT + 20, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH, 0.5f * APP_INIT_WINDOW_HEIGHT + 25, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH, 0.5f * APP_INIT_WINDOW_HEIGHT, "A - Move Left", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 5, 0.5f * APP_INIT_WINDOW_HEIGHT - 20, "S - Move Back", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 5, 0.5f * APP_INIT_WINDOW_HEIGHT - 40, "D - Move Right", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 5, 0.5f * APP_INIT_WINDOW_HEIGHT - 25, "S - Move Back", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 5, 0.5f * APP_INIT_WINDOW_HEIGHT - 50, "D - Move Right", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 7.5, 0.5f * APP_INIT_WINDOW_HEIGHT - 75, "J - BOMB!!!", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 
 		BackButton.Render();
 		break;
