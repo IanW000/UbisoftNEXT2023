@@ -76,9 +76,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>.\glut;$(IncludePath)</IncludePath>
-    <LibraryPath>.\glut\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\include;$(ProjectDir)\lib;$(ProjectDir)\src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\lib\glut\lib\x64;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <OutDir>$(ProjectDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)\build\$(Platform)\$(Configuration)\</IntDir>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -176,25 +179,25 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App\app.h" />
-    <ClInclude Include="App\AppSettings.h" />
-    <ClInclude Include="App\main.h" />
-    <ClInclude Include="App\SimpleController.h" />
-    <ClInclude Include="App\SimpleSound.h" />
-    <ClInclude Include="App\SimpleSprite.h" />
-    <ClInclude Include="App\TextureLoader.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="lib\App\app.h" />
+    <ClInclude Include="lib\App\AppSettings.h" />
+    <ClInclude Include="lib\App\main.h" />
+    <ClInclude Include="lib\App\SimpleController.h" />
+    <ClInclude Include="lib\App\SimpleSound.h" />
+    <ClInclude Include="lib\App\SimpleSprite.h" />
+    <ClInclude Include="lib\App\TextureLoader.h" />
+    <ClInclude Include="include\stdafx.h" />
+    <ClInclude Include="include\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="App\app.cpp" />
-    <ClCompile Include="App\main.cpp" />
-    <ClCompile Include="App\SimpleController.cpp" />
-    <ClCompile Include="App\SimpleSound.cpp" />
-    <ClCompile Include="App\SimpleSprite.cpp" />
-    <ClCompile Include="App\TextureLoader.cpp" />
-    <ClCompile Include="GameTest.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="lib\App\app.cpp" />
+    <ClCompile Include="lib\App\main.cpp" />
+    <ClCompile Include="lib\App\SimpleController.cpp" />
+    <ClCompile Include="lib\App\SimpleSound.cpp" />
+    <ClCompile Include="lib\App\SimpleSprite.cpp" />
+    <ClCompile Include="lib\App\TextureLoader.cpp" />
+    <ClCompile Include="src\GameTest.cpp" />
+    <ClCompile Include="include\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
