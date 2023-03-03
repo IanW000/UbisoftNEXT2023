@@ -21,11 +21,16 @@ MouseInput GameManager::getMousePosition()
 };
 
 void GameManager::Init() {
+	App::PlaySound(".\\res\\mainMenuBGM.wav", true);
+	player.Init();
+	UISettings.Init();
 }
 
 void GameManager::Update(float deltaTime) {
-
+	player.Update(deltaTime);
+	UISettings.Update(deltaTime);
 }
 void GameManager::Render() {
-
+	player.Render();
+	UISettings.Render();
 }

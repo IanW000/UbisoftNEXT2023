@@ -1,5 +1,6 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\\build\x64\Debug\) contains files shared from another project (GameTest.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   GameManager.cpp
-  Game.cpp
+  Player.cpp
+  Transform.cpp
   Generating Code...
   GameTest.vcxproj -> C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\build\x64\Debug\Game.exe
