@@ -180,7 +180,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Object\Rock\Rock.h" />
+    <ClInclude Include="src\Object\Brick\Brick.h" />
     <ClInclude Include="src\UI\HPBar\HPBar.h" />
     <ClInclude Include="src\Object\Enemy\AI\AI.h" />
     <ClInclude Include="src\Render\Color.h" />
@@ -203,10 +203,10 @@
     <ClInclude Include="src\Math\Utils.h" />
     <ClInclude Include="src\UI\UI.h" />
     <ClInclude Include="src\Object\Transform\Transform.h" />
-    <ClInclude Include="src\Object\Wall\Wall.h" />
+    <ClInclude Include="src\Object\Block\Block.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Object\Rock\Rock.cpp" />
+    <ClCompile Include="src\Object\Brick\Brick.cpp" />
     <ClCompile Include="src\UI\HPBar\HPBar.cpp" />
     <ClCompile Include="src\Object\Enemy\AI\AI.cpp" />
     <ClCompile Include="src\Render\Color.cpp" />
@@ -233,7 +233,7 @@
     <ClCompile Include="src\Math\Utils.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />
     <ClCompile Include="src\Object\Transform\Transform.cpp" />
-    <ClCompile Include="src\Object\Wall\Wall.cpp" />
+    <ClCompile Include="src\Object\Block\Block.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

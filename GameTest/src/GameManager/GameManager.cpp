@@ -2,6 +2,12 @@
 #include "GameManager.h"
 #include "App/app.h"
 #include <App/main.h>
+#include <Math/Utils.h>
+
+
+
+
+
 
 GameManager::GameManager()
 {
@@ -56,7 +62,7 @@ void GameManager::Render() {
 	UISettings.Render();
 
 	//Debug Line || player.currentHP || (int)UISettings.getCurrentScreen()
-	debugLine = std::to_string(player.currentHP);
+	//debugLine = std::to_string(Utils::RandomInt(1, 30));
 	App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
 	App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
 
