@@ -21,16 +21,48 @@ MouseInput GameManager::getMousePosition()
 };
 
 void GameManager::Init() {
+
 	App::PlaySound(".\\res\\mainMenuBGM.wav", true);
-	player.Init();
-	UISettings.Init();
+	UISettings.Init(player);
 }
 
 void GameManager::Update(float deltaTime) {
-	player.Update(deltaTime);
-	UISettings.Update(deltaTime);
+
+
+	switch (UISettings.getCurrentScreen()) {
+
+	case Screens::MAINMENU:
+
+		player.Reset();
+		deadScreen = false;
+		break;
+
+	case Screens::GAME:
+
+		player.Update(deltaTime);
+		break;
+	}
+
+	if (player.died && !deadScreen) {
+		deadScreen = true;
+		UISettings.setCurrentScreen(Screens::DEAD);
+	}
+
+
+	UISettings.Update(deltaTime, player, deadScreen);
 }
 void GameManager::Render() {
-	player.Render();
+
 	UISettings.Render();
+
+	//Debug Line || player.currentHP || (int)UISettings.getCurrentScreen()
+	debugLine = std::to_string(player.currentHP);
+	App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
+	App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
+
+}
+
+float GameManager::GetDeltaTime() const
+{
+	return 0.0f;
 }

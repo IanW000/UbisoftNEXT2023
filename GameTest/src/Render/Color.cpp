@@ -71,8 +71,12 @@ void Color::SetColor(Colors color) {
 	}
 }
 float Color::ConvertToFloat(int Integer) {
+
 	return (float)Integer / 255;
+
 }
 int Color::ConvertToInt(float Float) {
+
 	return (int)Float * 255;
+
 }

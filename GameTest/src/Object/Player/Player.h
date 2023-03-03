@@ -3,9 +3,15 @@
 class Player : Object
 {
 public:
-	void Init();
+
+	Player();
+	int currentHP;
+	bool died;
+	void Reset();
 	void Update(float deltaTime);
 	void Render();
+	bool resetOnce;
+
 };
 
 

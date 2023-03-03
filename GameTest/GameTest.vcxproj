@@ -180,6 +180,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\UI\HPBar\HPBar.h" />
+    <ClInclude Include="src\Object\Enemy\AI\AI.h" />
     <ClInclude Include="src\Render\Color.h" />
     <ClInclude Include="src\Render\Renderer.h" />
     <ClInclude Include="src\UI\Button\Button.h" />
@@ -202,6 +204,8 @@
     <ClInclude Include="src\Object\Transform\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\UI\HPBar\HPBar.cpp" />
+    <ClCompile Include="src\Object\Enemy\AI\AI.cpp" />
     <ClCompile Include="src\Render\Color.cpp" />
     <ClCompile Include="src\UI\Button\Button.cpp" />
     <ClCompile Include="src\Render\Renderer.cpp" />

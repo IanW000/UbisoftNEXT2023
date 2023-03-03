@@ -1,7 +1,7 @@
 #pragma once
 #include <UI/UI.h>
 #include <Object/Player/Player.h>
-//#include <string>
+#include <string>
 
 struct MouseInput {
 	float x, y;
@@ -13,15 +13,18 @@ public:
 	GameManager();
 
 
-	Player player;
 	UI UISettings;
+	Player player;
 
 	static MouseInput getMousePosition();
 	void Init();
 	void Update(float deltaTime);
 	void Render();
+	float GetDeltaTime() const;
+	std::string debugLine;
 
-	//std::string debugLine;
+	bool deadScreen = false;
+
 
 private:
 };
