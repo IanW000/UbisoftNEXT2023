@@ -24,14 +24,14 @@ enum
 
 void Init()
 {
-	testSprite = App::CreateSprite(".\\res\\Sprite\\Test.bmp", 8, 4);
+	testSprite = App::CreateSprite(".\\res\\Sprite\\Test2.bmp", 4, 4);
 	testSprite->SetPosition(400.0f, 400.0f);
 	float speed = 1.0f / 15.0f;
-	testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
-	testSprite->CreateAnimation(ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
-	testSprite->CreateAnimation(ANIM_RIGHT, speed, { 16,17,18,19,20,21,22,23 });
-	testSprite->CreateAnimation(ANIM_FORWARDS, speed, { 24,25,26,27,28,29,30,31 });
-	testSprite->SetScale(1.0f);
+	testSprite->CreateAnimation(ANIM_BACKWARDS, speed, {4,5,6,7});
+	testSprite->CreateAnimation(ANIM_LEFT, speed, { 8,9,10,11 });
+	testSprite->CreateAnimation(ANIM_RIGHT, speed, { 12,13,14,15});
+	testSprite->CreateAnimation(ANIM_FORWARDS, speed, { 0,1,2,3 });
+	testSprite->SetScale(.3f);
 
 	gameManager.Init();
 }
