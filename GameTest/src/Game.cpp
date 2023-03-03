@@ -9,40 +9,39 @@
 #include "app\app.h"
 #include <GameManager/GameManager.h>
 #include <vector>
-#include "Render/Renderer.h"
+#include "Graphics/Scene.h"
+#include <UI/UI.h>
 //------------------------------------------------------------------------
 
 GameManager gameManager;
-Renderer renderer;
+Scene scene;
+UI UISettings;
 
 
 void Init()
 {
 
-	renderer.Init();
-
+	scene.Init();
 	gameManager.Init();
+	UISettings.Init();
 }
 
 void Update(float deltaTime)
 {
 	//------------------------------------------------------------------------
 // Example Sprite Code....
-	renderer.Update(deltaTime);
+	scene.Update(deltaTime);
 	gameManager.Update(deltaTime);
+	UISettings.Update(deltaTime);
 }
 
 std::string debugLine;
 
 void Render()
 {
-	//debugLine = std::to_string(map[0][0]);
-	App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
-	App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
-
-	renderer.Render();
+	scene.Render();
 	gameManager.Render();
-
+	UISettings.Render();
 }
 
 void Shutdown()

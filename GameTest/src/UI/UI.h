@@ -23,11 +23,15 @@ public:
 	Screens getCurrentScreen() const;
 	void CenteringPrint(float x, float y, const char* st, float r, float g, float b, void* font, bool center);
 	void setCurrentScreen(Screens screen);
-	void Init(Player& player);
-	void Update(float deltaTime, Player player, bool deadScreen);
+	//void Init(Player& player);
+	//void Update(float deltaTime, Player player, bool deadScreen);
+
+
+	void Init();
+	void Update(float deltaTime);
 	void Render();
 private:
-	Player* m_player;
+	//Player* m_player;
 	Screens currentScreen;
 	bool failSFXPlayedOnce, winSFXPlayedOnce;
 };

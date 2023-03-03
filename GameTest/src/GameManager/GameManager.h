@@ -1,6 +1,5 @@
 #pragma once
-#include <UI/UI.h>
-#include <Object/Player/Player.h>
+
 #include <string>
 
 struct MouseInput {
@@ -11,10 +10,6 @@ class GameManager {
 public:
 
 	GameManager();
-
-
-	UI UISettings;
-	Player player;
 
 	static MouseInput getMousePosition();
 	void Init();

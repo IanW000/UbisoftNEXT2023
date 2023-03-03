@@ -29,37 +29,37 @@ MouseInput GameManager::getMousePosition()
 void GameManager::Init() {
 
 	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-	UISettings.Init(player);
+
 }
 
 void GameManager::Update(float deltaTime) {
 
 
-	switch (UISettings.getCurrentScreen()) {
+	//switch (UISettings.getCurrentScreen()) {
 
-	case Screens::MAINMENU:
+	//case Screens::MAINMENU:
 
-		player.Reset();
-		deadScreen = false;
-		break;
+	//	player.Reset();
+	//	deadScreen = false;
+	//	break;
 
-	case Screens::GAME:
+	//case Screens::GAME:
 
-		player.Update(deltaTime);
-		break;
-	}
+	//	player.Update(deltaTime);
+	//	break;
+	//}
 
-	if (player.died && !deadScreen) {
-		deadScreen = true;
-		UISettings.setCurrentScreen(Screens::DEAD);
-	}
+	//if (player.died && !deadScreen) {
+	//	deadScreen = true;
+	//	UISettings.setCurrentScreen(Screens::DEAD);
+	//}
 
 
-	UISettings.Update(deltaTime, player, deadScreen);
+	
 }
 void GameManager::Render() {
 
-	UISettings.Render();
+	//UISettings.Render();
 
 	//Debug Line || player.currentHP || (int)UISettings.getCurrentScreen()
 	//debugLine = std::to_string(Utils::RandomInt(1, 30));

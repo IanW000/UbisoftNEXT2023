@@ -1,5 +1,5 @@
 #pragma once
-#include <Render/Color.h>
+#include <Graphics/Color.h>
 #include <Object/Player/Player.h>
 
 struct HPBar {
