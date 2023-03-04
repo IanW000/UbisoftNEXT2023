@@ -112,9 +112,21 @@ void Scene::resetMap() {
 
 }
 
-
+enum trysad {
+	HAHAHA
+};
 void Scene::placeBomb() {
+	//CSimpleSprite* bomb;
+	//bomb = App::CreateSprite(".\\res\\Sprite\\Bomb.bmp", 4, 1);
+	//float bombSpeed = 1.0f / 15.0f;
+	//bomb->SetPosition(player.getX() ,player.getY());
+	//bomb->CreateAnimation(HAHAHA, bombSpeed, { 0,1,2,3 });
+	//bomb->SetScale(0.4f);
+	//bombSprite.push_back(bomb);
 
+
+	Bomb newBomb;
+	m_Bombs.push_back(newBomb);
 }
 
 void Scene::Init(UI& UISettings)
@@ -124,7 +136,7 @@ void Scene::Init(UI& UISettings)
 	player.Init();
 
 	for (auto bombs : m_Bombs) {
-		(*bombs).Init(player.getX(), player.getY());
+		bombs.Init(player.getX(), player.getY());
 	}
 
 }
@@ -157,12 +169,15 @@ void Scene::Update(float deltaTime)
 
 	if (App::IsKeyPressed('J'))
 	{
-		Bomb newBomb;
-		m_Bombs.push_back(&newBomb);
+		placeBomb();
 	}
 	
+	//for (auto bomb : bombSprite) {
+	//	bomb->SetAnimation(HAHAHA);
+	//}
+
 	for (auto bombs : m_Bombs) {
-		(*bombs).Update();
+		bombs.Update(deltaTime);
 	}
 }
 
@@ -192,6 +207,10 @@ void Scene::Render()
 	player.Render();
 
 	for (auto bombs : m_Bombs) {
-		(*bombs).Render();
+		bombs.Render();
 	}
+
+	//for (auto bomb : bombSprite) {
+	//	bomb->Draw();
+	//}
 }

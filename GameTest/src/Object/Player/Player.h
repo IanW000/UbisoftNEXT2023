@@ -7,7 +7,7 @@ enum
 	ANIM_FORWARDS,
 	ANIM_BACKWARDS,
 	ANIM_LEFT,
-	ANIM_RIGHT,
+	ANIM_RIGHT
 };
 
 class Player : Object
@@ -36,6 +36,8 @@ private:
 	int playerHeight;
 	int playerX;
 	int playerY;
+	float speed;
+
 
 };
 

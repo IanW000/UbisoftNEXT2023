@@ -41,6 +41,6 @@ private:
 
 	Matrix Mat2D;
 
-	std::vector<Bomb*> m_Bombs;
+	std::vector<Bomb> m_Bombs;
 };
 
