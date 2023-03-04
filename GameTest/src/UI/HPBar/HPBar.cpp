@@ -86,9 +86,9 @@ void HPBar::Init()
 
 }
 
-void HPBar::Update(float deltaTime, Player *player)
+void HPBar::Update(float deltaTime, Player player)
 {
-	this->currentHP =(*player).currentHP;
+	this->currentHP = player.currentHP;
 }
 
 float getPercentageHP(int currentHP) {

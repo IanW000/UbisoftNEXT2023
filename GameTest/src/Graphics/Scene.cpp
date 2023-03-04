@@ -21,7 +21,7 @@ struct Boom {
 }boom;
 
 
-Scene::Scene() 
+Scene::Scene()
 {
 }
 //UI &UISettings
@@ -123,9 +123,9 @@ void Scene::Render()
 	}
 
 	
-	std::string debugLine = std::to_string(player.currentHP);
-	App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
-	App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
+	//std::string debugLine = std::to_string((*player).currentHP);
+	//App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
+	//App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
 
 	//draw objects
 	bomBSprite->Draw();

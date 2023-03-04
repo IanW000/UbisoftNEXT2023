@@ -175,7 +175,7 @@ void UI::Update(float deltaTime)
 	
 		case Screens::GAME:
 			PauseButton.Update(deltaTime);
-			//hpBar.Update(deltaTime, m_scene->player);
+			hpBar.Update(deltaTime, m_scene->player);
 	
 			if (PauseButton.pause) {
 				setCurrentScreen(Screens::PAUSE);

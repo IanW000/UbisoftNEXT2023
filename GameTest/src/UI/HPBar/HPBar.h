@@ -10,7 +10,7 @@ public:
 	void CreateHPBar(float x, float y, float dx, float dy, Colors bgColor, Colors innerColor, Colors hpLoseColor);
 
 	void Init();
-	void Update(float deltaTime, Player *player);
+	void Update(float deltaTime, Player player);
 	void Render();
 
 private:
