@@ -36,105 +36,6 @@ void UI::setCurrentScreen(Screens screen)
 	currentScreen = screen;
 }
 
-//void UI::Update(float deltaTime, Player player, bool deadScreen)
-//{
-//
-//	switch (currentScreen) {
-//
-//	case Screens::MAINMENU:
-//		StartButton.Update(deltaTime);
-//		ControlsButton.Update(deltaTime);
-//		ExitButton.Update(deltaTime);
-//
-//		if (StartButton.gameScreen) {
-//			App::StopSound(".\\res\\Sound\\mainMenuBGM.wav");
-//			App::PlaySound(".\\res\\Sound\\inGameBGM.wav", true);
-//			setCurrentScreen(Screens::GAME);
-//			StartButton.gameScreen = false;
-//		}
-//
-//		if (ControlsButton.controlsScreen) {
-//			setCurrentScreen(Screens::CONTROLS);
-//			ControlsButton.controlsScreen = false;
-//		}
-//		break;
-//
-//	case Screens::CONTROLS:
-//		BackButton.Update(deltaTime);
-//
-//		if (BackButton.backToMainScreen) {
-//			setCurrentScreen(Screens::MAINMENU);
-//			BackButton.backToMainScreen = false;
-//		}
-//		break;
-//
-//	case Screens::GAME:
-//		PauseButton.Update(deltaTime);
-//		hpBar.Update(deltaTime, player);
-//
-//		if (PauseButton.pause) {
-//			setCurrentScreen(Screens::PAUSE);
-//			PauseButton.pause = false;
-//		}
-//		break;
-//
-//	case Screens::PAUSE:
-//		BackButtonInGame.Update(deltaTime);
-//		ResumeButton.Update(deltaTime);
-//
-//		if (BackButtonInGame.backToMainScreen) {
-//			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
-//			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-//			setCurrentScreen(Screens::MAINMENU);
-//			BackButtonInGame.backToMainScreen = false;
-//		}
-//
-//		if (ResumeButton.resume) {
-//			setCurrentScreen(Screens::GAME);
-//			ResumeButton.resume = false;
-//		}
-//		break;
-//
-//	case Screens::DEAD:
-//
-//		BackButtonInGame.Update(deltaTime);
-//
-//		if (!failSFXPlayedOnce) {
-//			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
-//			App::PlaySound(".\\res\\Sound\\fail.wav");
-//			failSFXPlayedOnce = true;
-//		}
-//
-//		if (BackButtonInGame.backToMainScreen) {
-//			//we cannot player variable here?
-//			player.currentHP = 100;
-//			player.died = false;
-//			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-//			setCurrentScreen(Screens::MAINMENU);
-//			BackButtonInGame.backToMainScreen = false;
-//			failSFXPlayedOnce = false;
-//		}
-//		break;
-//
-//	case Screens::WIN:
-//		//BackButtonInGame.Update(deltaTime);
-//		//ResumeButton.Update(deltaTime);
-//
-//		//if (BackButtonInGame.backToMainScreen) {
-//		//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
-//		//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-//		//	setCurrentScreen(Screens::MAINMENU);
-//		//	BackButtonInGame.backToMainScreen = false;
-//		//}
-//
-//		//if (ResumeButton.resume) {
-//		//	setCurrentScreen(Screens::GAME);
-//		//	ResumeButton.resume = false;
-//		//}
-//		break;
-//	}
-//}
-
 void UI::Init(Scene &scene)
 {
 	m_scene = &scene;
@@ -274,12 +175,12 @@ void UI::Render()
 
 	case Screens::GAME:
 
-		hpBar.CreateHPBar((GLfloat)-0.93, (GLfloat)0.83, (GLfloat)0.07, (GLfloat)0.88, Colors::White, Colors::Green, Colors::Yellow);
+		hpBar.CreateHPBar((GLfloat)-0.98, (GLfloat)0.93, (GLfloat)0.02, (GLfloat)0.98, Colors::White, Colors::Green, Colors::Yellow);
 
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 300, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH, 0.5f * APP_INIT_WINDOW_HEIGHT - 300, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 300, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
-		PauseButton.CreateButton((GLfloat)0.8, (GLfloat)0.8, (GLfloat)0.9, (GLfloat)0.9, 0.5f * APP_INIT_WINDOW_WIDTH + 430, 0.5f * APP_INIT_WINDOW_HEIGHT + 320, "| |", Colors::Pink, ButtonType::PAUSE);
+		PauseButton.CreateButton((GLfloat)0.88, (GLfloat)0.88, (GLfloat)0.98, (GLfloat)0.98, 0.5f * APP_INIT_WINDOW_WIDTH + 470, 0.5f * APP_INIT_WINDOW_HEIGHT + 350, "| |", Colors::Pink, ButtonType::PAUSE);
 
 		hpBar.Render();
 		PauseButton.Render();

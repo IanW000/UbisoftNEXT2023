@@ -46,8 +46,9 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		playerSprite->SetAnimation(ANIM_RIGHT);
 		float x, y;
 		playerSprite->GetPosition(x, y);
-		if (Mat2d(playerY / Scene::BLOCK_BRICK_SIZE, (playerX + 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE) {
-			playerX = x += 1.0f;
+		if (Mat2d((int)(playerY - 16.0f) / Scene::BLOCK_BRICK_SIZE, (int)(playerX + 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE) {
+			playerX = (int)x;
+			x += 1.0f;
 			playerSprite->SetPosition(x, y);
 		}
 	}
@@ -58,8 +59,9 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		float x, y;
 		playerSprite->GetPosition(x, y);
 
-		if (Mat2d(playerY / Scene::BLOCK_BRICK_SIZE, (playerX- 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE){
-			playerX = x -= 1.0f;
+		if (Mat2d((int)(playerY-16.0f) / Scene::BLOCK_BRICK_SIZE, (int)(playerX- 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE){
+			playerX = (int)x;
+			x -= 1.0f;
 			playerSprite->SetPosition(x, y);
 		}
 	}
@@ -71,8 +73,9 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		float x, y;
 		playerSprite->GetPosition(x, y);
 
-		if (Mat2d( (playerY + 10.0f) / Scene::BLOCK_BRICK_SIZE, playerX / Scene::BLOCK_BRICK_SIZE) == SPACE) {
-			playerY = y += 1.0f;
+		if (Mat2d((int)(playerY + 10.0f) / Scene::BLOCK_BRICK_SIZE, (int)playerX / Scene::BLOCK_BRICK_SIZE) == SPACE) {
+			playerY = (int)y;
+			y += 1.0f;
 			playerSprite->SetPosition(x, y);
 		}
 	}
@@ -83,9 +86,10 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		float x, y;
 		playerSprite->GetPosition(x, y);
 
-		if (Mat2d((playerY - 25.0f) / Scene::BLOCK_BRICK_SIZE, playerX / Scene::BLOCK_BRICK_SIZE) == SPACE) {
+		if (Mat2d((int)(playerY - 25.0f) / Scene::BLOCK_BRICK_SIZE, (int)playerX / Scene::BLOCK_BRICK_SIZE) == SPACE) {
 
-			playerY = y -= 1.0f;
+			playerY = (int)y;
+			y -= 1.0f;
 
 			playerSprite->SetPosition(x, y);
 		}
@@ -113,8 +117,10 @@ void Player::Render()
 {
 	playerSprite->Draw();
 	//wait 2 seconds
-	if(died)
+	if (died) {
+		//delete playerSprite;
 		diedSprite->Draw();
+	}
 }
 
 int Player::getX()

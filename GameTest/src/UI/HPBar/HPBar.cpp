@@ -75,9 +75,9 @@ void HPBar::CreateHPBar(float x, float y, float dx, float dy, Colors bgColor, Co
 	glEnd();
 
 	//HP Text
-	App::Print(590 - rightAlign(currentHP), 705, std::to_string(currentHP).c_str(), (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
-	App::Print(600, 705, "/", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
-	App::Print(610, 705, "100", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(560 - rightAlign(currentHP), 745, std::to_string(currentHP).c_str(), (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(570, 745, "/", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(580, 745, "100", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
 }
 
 

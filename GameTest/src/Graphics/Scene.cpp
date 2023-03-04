@@ -16,12 +16,8 @@ int testSave, testSave2;
 Scene::Scene() : m_UISettings(nullptr), deadScreen(false) 
 {
 }
-//UI &UISettings
-void Scene::Init(UI& UISettings)
-{
-	m_UISettings = &UISettings;
 
-
+void Scene::generateMap() {
 	for (int i = 0; i < ROW; i++) {
 		Mat2D(i, 0) = Mat2D(i, COL - 1) = BLOCK;
 	}
@@ -45,41 +41,28 @@ void Scene::Init(UI& UISettings)
 			Mat2D(r, c) = BRICK;
 	}
 
+	int x = Utils::RandomInt(2, Scene::COL - 3);
+	int y = Utils::RandomInt(2, Scene::ROW - 3);
+
+	testSave = x;
+	testSave2 = y;
 
 
+	Mat2D(y + 1, x + 1) = SPACE;
+	Mat2D(y + 1, x) = SPACE;
+	Mat2D(y + 1, x - 1) = SPACE;
+	Mat2D(y, x + 1) = SPACE;
+	Mat2D(y, x) = SPACE;
+	Mat2D(y, x - 1) = SPACE;
+	player.setX(x * Scene::BLOCK_BRICK_SIZE);
+	player.setY(y * Scene::BLOCK_BRICK_SIZE + 55);
+}
 
-
-
-		int x = Utils::RandomInt(2, Scene::COL - 3);
-		int y = Utils::RandomInt(2, Scene::ROW - 3);
-
-		testSave = x;
-		testSave2 = y;
-
-
-		Mat2D(y + 1, x + 1) = SPACE;
-		Mat2D(y + 1, x) = SPACE;
-		Mat2D(y + 1, x - 1) = SPACE;
-		Mat2D(y, x + 1) = SPACE;
-		Mat2D(y, x) = SPACE;
-		Mat2D(y, x - 1) = SPACE;
-		player.setX(x * Scene::BLOCK_BRICK_SIZE );
-		player.setY(y * Scene::BLOCK_BRICK_SIZE +55);
-
-
-
-
-
-
-	//int a[] = { 1 };
-	//{
-	//	
-	//		Matrix matrix[] = [(y + 1, x + 1)
-
-	//			
-
-
-		player.Init();
+void Scene::Init(UI& UISettings)
+{
+	m_UISettings = &UISettings;
+	generateMap();
+	player.Init();
 
 	for (int i = 0; i < ROW; i++) {
 		for (int j = 0; j < COL; j++) {

@@ -18,7 +18,8 @@ class Scene
 {
 public:
 	Scene();
-	//UI &UISettings
+	
+	void generateMap();
 	void Init(UI& UISettings);
 	void Update(float deltaTime);
 	void Render();
