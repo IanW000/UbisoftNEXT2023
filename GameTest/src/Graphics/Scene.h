@@ -30,7 +30,7 @@ public:
 	const static int brickNum = 512;
 
 	//UI *UISettings;
-	Player *player;
+	Player player;
 
 private:
 	Matrix Mat2D;
