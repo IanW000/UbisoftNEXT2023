@@ -12,12 +12,15 @@ std::vector<CSimpleSprite*> brickSprite;
 std::vector<CSimpleSprite*> blockSprite;
 std::vector<CSimpleSprite*> grassSprite;
 
+std::vector<CSimpleSprite*> bombSprite;
+
 int testSave, testSave2;
 Scene::Scene() : m_UISettings(nullptr), deadScreen(false) 
 {
 }
 
 void Scene::generateMap() {
+
 	for (int i = 0; i < ROW; i++) {
 		Mat2D(i, 0) = Mat2D(i, COL - 1) = BLOCK;
 	}
@@ -56,17 +59,12 @@ void Scene::generateMap() {
 	Mat2D(y, x - 1) = SPACE;
 	player.setX(x * Scene::BLOCK_BRICK_SIZE);
 	player.setY(y * Scene::BLOCK_BRICK_SIZE + 55);
-}
 
-void Scene::Init(UI& UISettings)
-{
-	m_UISettings = &UISettings;
-	generateMap();
-	player.Init();
+	player.setPlayerLocation();
 
 	for (int i = 0; i < ROW; i++) {
 		for (int j = 0; j < COL; j++) {
-			switch (Mat2D(i,j)) {
+			switch (Mat2D(i, j)) {
 
 			case SPACE:
 				CSimpleSprite* space;
@@ -98,13 +96,36 @@ void Scene::Init(UI& UISettings)
 			}
 		}
 	}
+}
+
+void Scene::resetMap() {
+
+	for (int i = 0; i < ROW; i++) {
+		for (int j = 0; j < COL; j++) {
+				Mat2D(i, j) = SPACE;
+		}
+	}
+
+	grassSprite.clear();
+	brickSprite.clear();
+	blockSprite.clear();
+
+}
 
 
+void Scene::placeBomb() {
+
+}
+
+void Scene::Init(UI& UISettings)
+{
+	m_UISettings = &UISettings;
+
+	player.Init();
 
 	for (auto bombs : m_Bombs) {
 		(*bombs).Init(player.getX(), player.getY());
 	}
-
 
 }
 

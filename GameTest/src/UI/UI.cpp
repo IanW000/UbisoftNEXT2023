@@ -56,6 +56,7 @@ void UI::Update(float deltaTime)
 				App::StopSound(".\\res\\Sound\\mainMenuBGM.wav");
 				App::PlaySound(".\\res\\Sound\\inGameBGM.wav", true);
 				setCurrentScreen(Screens::GAME);
+				m_scene->generateMap();
 				StartButton.gameScreen = false;
 			}
 	
@@ -89,6 +90,7 @@ void UI::Update(float deltaTime)
 			ResumeButton.Update(deltaTime);
 	
 			if (BackButtonInGame.backToMainScreen) {
+				m_scene->resetMap();
 				App::StopSound(".\\res\\Sound\\inGameBGM.wav");
 				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 				setCurrentScreen(Screens::MAINMENU);
@@ -112,6 +114,7 @@ void UI::Update(float deltaTime)
 			}
 	
 			if (BackButtonInGame.backToMainScreen) {
+				m_scene->resetMap();
 				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 				setCurrentScreen(Screens::MAINMENU);
 				BackButtonInGame.backToMainScreen = false;
@@ -124,6 +127,7 @@ void UI::Update(float deltaTime)
 			//ResumeButton.Update(deltaTime);
 	
 			//if (BackButtonInGame.backToMainScreen) {
+			// m_scene->resetMap();
 			//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
 			//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 			//	setCurrentScreen(Screens::MAINMENU);

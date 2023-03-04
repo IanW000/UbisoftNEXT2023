@@ -46,7 +46,7 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		playerSprite->SetAnimation(ANIM_RIGHT);
 		float x, y;
 		playerSprite->GetPosition(x, y);
-		if (Mat2d((int)(playerY - 16.0f) / Scene::BLOCK_BRICK_SIZE, (int)(playerX + 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE) {
+		if (Mat2d((int)(playerY-16.0f) / Scene::BLOCK_BRICK_SIZE, (int)(playerX + 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE) {
 			playerX = (int)x;
 			x += 1.0f;
 			playerSprite->SetPosition(x, y);
@@ -138,5 +138,8 @@ void Player::setX(int x) {
 
 void Player::setY(int y) {
 	playerY = y;
+}
+void Player::setPlayerLocation() {
+	playerSprite->SetPosition(playerX, playerY);
 }
 

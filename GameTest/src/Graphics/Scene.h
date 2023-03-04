@@ -20,6 +20,8 @@ public:
 	Scene();
 	
 	void generateMap();
+	void resetMap();
+	void placeBomb();
 	void Init(UI& UISettings);
 	void Update(float deltaTime);
 	void Render();

@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 struct Matrix
 {
@@ -6,6 +7,7 @@ struct Matrix
 	Matrix();
 
 	int& operator()(int row, int col);
+	std::vector<int>& matrixFullList();
 
 private:
 
