@@ -22,7 +22,6 @@ public:
 	void Init(Matrix Mat2d);
 	void Update(float deltaTime);
 	void Render();
-	bool resetOnce;
 	int playerX;
 	int playerY;
 

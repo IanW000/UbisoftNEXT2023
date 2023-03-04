@@ -6,6 +6,7 @@
 
 CSimpleSprite* playerSprite;
 
+
 Player::Player() : currentHP(100), died(false), playerX(0), playerY(0)
 {
 }
@@ -19,6 +20,7 @@ void Player::Reset()
 
 void Player::Init(Matrix Mat2D) {
 
+	
 	playerSprite = App::CreateSprite(".\\res\\Sprite\\Player.bmp", 4, 4);
 
 

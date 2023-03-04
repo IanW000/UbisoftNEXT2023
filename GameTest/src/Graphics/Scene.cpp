@@ -7,21 +7,13 @@
 
 //CSimpleSprite* testSprite;
 
-CSimpleSprite* bomBSprite;
+
 std::vector<CSimpleSprite*> brickSprite;
 std::vector<CSimpleSprite*> blockSprite;
 std::vector<CSimpleSprite*> grassSprite;
 
-struct Boom {
-	int x;
-	int y;
 
-	int exist;
-	bool explode;
-}boom;
-
-
-Scene::Scene()
+Scene::Scene() : m_UISettings(nullptr), deadScreen(false) 
 {
 }
 //UI &UISettings
@@ -29,10 +21,6 @@ void Scene::Init(UI& UISettings)
 {
 	m_UISettings = &UISettings;
 
-	boom.exist = false;
-	boom.explode = false;
-	boom.x = 0;
-	boom.y = 0;
 
 	for (int i = 0; i < ROW; i++) {
 		Mat2D(i, 0) = Mat2D(i, COL - 1) = BLOCK;
@@ -59,11 +47,7 @@ void Scene::Init(UI& UISettings)
 			Mat2D(r, c) = BRICK;
 	}
 
-	bomBSprite = App::CreateSprite(".\\res\\Sprite\\Bomb.bmp", 4, 1);
-	float bombSpeed = 1.0f / 15.0f;
-	bomBSprite->SetPosition(400, 400);
-	bomBSprite->CreateAnimation(0 , bombSpeed, { 0,1,2,3 });
-	bomBSprite->SetScale(.5f);
+
 
 
 	for (int i = 0; i < ROW; i++) {
@@ -146,6 +130,5 @@ void Scene::Render()
 	//App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
 
 	//draw objects
-	bomBSprite->Draw();
 	player.Render();
 }

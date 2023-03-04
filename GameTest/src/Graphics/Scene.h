@@ -2,6 +2,7 @@
 #include <Math/Matrix/Matrix.h>
 #include <Object/Player/Player.h>
 #include <UI/UI.h>
+#include <Object/Bomb/Bomb.h>
 
 
 
@@ -31,8 +32,12 @@ public:
 
 	UI * m_UISettings;
 	Player player;
-	bool deadScreen = false;
+	bool deadScreen;
+
 private:
+
 	Matrix Mat2D;
+
+	std::vector<Bomb> m_Bombs;
 };
 
