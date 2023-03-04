@@ -5,7 +5,7 @@
 #include "HPBar/HPBar.h"
 #include <Object/Player/Player.h>
 
-class Scene;
+class MapManager;
 
 enum class Screens {
 	MAINMENU,
@@ -28,13 +28,13 @@ public:
 
 
 	//void Init();
-	void Init(Scene &scene);
+	void Init(MapManager& mapManager);
 	void Update(float deltaTime);
 	void Render();
 
 private:
 	//Player* m_player;
-	Scene *m_scene;
+	MapManager *m_mapManager;
 	Screens currentScreen;
 	bool failSFXPlayedOnce, winSFXPlayedOnce;
 };

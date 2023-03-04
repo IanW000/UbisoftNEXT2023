@@ -2,7 +2,7 @@
 #include "Player.h"
 #include <App/app.h>
 #include <Math/Utils.h>
-#include <Graphics/Scene.h>
+#include <Graphics/MapManager.h>
 
 CSimpleSprite* playerSprite;
 CSimpleSprite* diedSprite;
@@ -46,7 +46,7 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		playerSprite->SetAnimation(ANIM_RIGHT);
 		float x, y;
 		playerSprite->GetPosition(x, y);
-		if (Mat2d((int)(playerY-16.0f) / Scene::BLOCK_BRICK_SIZE, (int)(playerX + 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE) {
+		if (Mat2d((int)(playerY-16.0f) / MapManager::BLOCK_BRICK_SIZE, (int)(playerX + 16.0f) / MapManager::BLOCK_BRICK_SIZE) == SPACE) {
 			playerX = (int)x;
 			x += speed;
 			playerSprite->SetPosition(x, y);
@@ -59,7 +59,7 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		float x, y;
 		playerSprite->GetPosition(x, y);
 
-		if (Mat2d((int)(playerY-16.0f) / Scene::BLOCK_BRICK_SIZE, (int)(playerX- 16.0f) / Scene::BLOCK_BRICK_SIZE) == SPACE){
+		if (Mat2d((int)(playerY-16.0f) / MapManager::BLOCK_BRICK_SIZE, (int)(playerX- 16.0f) / MapManager::BLOCK_BRICK_SIZE) == SPACE){
 			playerX = (int)x;
 			x -= speed;
 			playerSprite->SetPosition(x, y);
@@ -73,7 +73,7 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		float x, y;
 		playerSprite->GetPosition(x, y);
 
-		if (Mat2d((int)(playerY + 10.0f) / Scene::BLOCK_BRICK_SIZE, (int)playerX / Scene::BLOCK_BRICK_SIZE) == SPACE) {
+		if (Mat2d((int)(playerY + 10.0f) / MapManager::BLOCK_BRICK_SIZE, (int)playerX / MapManager::BLOCK_BRICK_SIZE) == SPACE) {
 			playerY = (int)y;
 			y += speed;
 			playerSprite->SetPosition(x, y);
@@ -86,7 +86,7 @@ void Player::Update(float deltaTime, Matrix Mat2d)
 		float x, y;
 		playerSprite->GetPosition(x, y);
 
-		if (Mat2d((int)(playerY - 25.0f) / Scene::BLOCK_BRICK_SIZE, (int)playerX / Scene::BLOCK_BRICK_SIZE) == SPACE) {
+		if (Mat2d((int)(playerY - 25.0f) / MapManager::BLOCK_BRICK_SIZE, (int)playerX / MapManager::BLOCK_BRICK_SIZE) == SPACE) {
 
 			playerY = (int)y;
 			y -= speed;

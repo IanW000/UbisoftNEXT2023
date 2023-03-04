@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "UI.h"
 
-#include <Graphics/Scene.h>
+#include <Graphics/MapManager.h>
 
 
-UI::UI() : currentScreen(Screens::MAINMENU), failSFXPlayedOnce(false),winSFXPlayedOnce(false),m_scene(nullptr)
+UI::UI() : currentScreen(Screens::MAINMENU), failSFXPlayedOnce(false),winSFXPlayedOnce(false),m_mapManager(nullptr)
 {
 }
 
@@ -36,9 +36,9 @@ void UI::setCurrentScreen(Screens screen)
 	currentScreen = screen;
 }
 
-void UI::Init(Scene &scene)
+void UI::Init(MapManager& mapManager)
 {
-	m_scene = &scene;
+	m_mapManager = &mapManager;
 	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 }
 
@@ -56,7 +56,7 @@ void UI::Update(float deltaTime)
 				App::StopSound(".\\res\\Sound\\mainMenuBGM.wav");
 				App::PlaySound(".\\res\\Sound\\inGameBGM.wav", true);
 				setCurrentScreen(Screens::GAME);
-				m_scene->generateMap();
+				m_mapManager->generateMap();
 				StartButton.gameScreen = false;
 			}
 	
@@ -77,7 +77,7 @@ void UI::Update(float deltaTime)
 	
 		case Screens::GAME:
 			PauseButton.Update(deltaTime);
-			hpBar.Update(deltaTime, m_scene->player);
+			hpBar.Update(deltaTime, m_mapManager->player);
 	
 			if (PauseButton.pause) {
 				setCurrentScreen(Screens::PAUSE);
@@ -90,7 +90,7 @@ void UI::Update(float deltaTime)
 			ResumeButton.Update(deltaTime);
 	
 			if (BackButtonInGame.backToMainScreen) {
-				m_scene->resetMap();
+				m_mapManager->resetMap();
 				App::StopSound(".\\res\\Sound\\inGameBGM.wav");
 				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 				setCurrentScreen(Screens::MAINMENU);
@@ -114,7 +114,7 @@ void UI::Update(float deltaTime)
 			}
 	
 			if (BackButtonInGame.backToMainScreen) {
-				m_scene->resetMap();
+				m_mapManager->resetMap();
 				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 				setCurrentScreen(Screens::MAINMENU);
 				BackButtonInGame.backToMainScreen = false;
@@ -127,7 +127,7 @@ void UI::Update(float deltaTime)
 			//ResumeButton.Update(deltaTime);
 	
 			//if (BackButtonInGame.backToMainScreen) {
-			// m_scene->resetMap();
+			// m_mapManager->resetMap();
 			//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
 			//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 			//	setCurrentScreen(Screens::MAINMENU);

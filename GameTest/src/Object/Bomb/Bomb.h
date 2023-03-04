@@ -1,8 +1,10 @@
 #pragma once
 
-enum
+enum BombState
 {
-	ANIM_BOMB
+	NORMAL,
+	EXPLOSION,
+	DISAPPEAR
 };
 
 class Bomb
@@ -16,13 +18,17 @@ public:
 	void Update(float deltaTime);
 	void Render();
 
+	int getBombX();
+	int getBombY();
+
 private:
 
-	int x, y;
+	int bombX, bombY;
 	bool explosion;
 	int inventory;
 	int power;
 
+	BombState bombState;
 
 };
 

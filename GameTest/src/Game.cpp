@@ -9,33 +9,32 @@
 #include "app\app.h"
 #include <GameManager/GameManager.h>
 #include <vector>
-#include "Graphics/Scene.h"
+#include "Graphics/MapManager.h"
 #include <UI/UI.h>
 //------------------------------------------------------------------------
 
 GameManager gameManager;
-Scene scene;
+MapManager mapMananger;
 UI UISettings;
 
 
 void Init()
 {
-	scene.Init(UISettings);
-	//scene.Init();
+	mapMananger.Init(UISettings);
 	gameManager.Init();
-	UISettings.Init(scene);
+	UISettings.Init(mapMananger);
 }
 
 void Update(float deltaTime)
 {
-	scene.Update(deltaTime);
+	mapMananger.Update(deltaTime);
 	gameManager.Update(deltaTime);
 	UISettings.Update(deltaTime);
 }
 
 void Render()
 {
-	scene.Render();
+	mapMananger.Render();
 	gameManager.Render();
 	UISettings.Render();
 }

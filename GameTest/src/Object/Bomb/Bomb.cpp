@@ -2,31 +2,45 @@
 #include "Bomb.h"
 #include <App/App.h>
 
-CSimpleSprite* bomBSprite;
+CSimpleSprite* bombSprite;
 
-Bomb::Bomb() :explosion(false), inventory(1),power(1), x (0), y (0)
+Bomb::Bomb() :explosion(false), inventory(1),power(1), bombX (0), bombY(0), bombState(NORMAL)
 {
 
 }
 
 void Bomb::Init(int x, int y)
 {
-	bomBSprite = App::CreateSprite(".\\res\\Sprite\\Bomb.bmp", 3, 1);
+
+	bombX = x;
+	bombY = y;
+
+	bombSprite = App::CreateSprite(".\\res\\Sprite\\Bomb.bmp", 4, 1);
 	float bombSpeed = 1.0f / 15.0f;
-	bomBSprite->SetPosition((float)x, (float)y);
-	bomBSprite->CreateAnimation(ANIM_BOMB, bombSpeed, { 0,1,2,3 });
-	bomBSprite->SetScale(0.3f);
+	bombSprite->SetPosition((float)bombX, (float)bombY -5);
+	bombSprite->CreateAnimation(0, bombSpeed, { 0,1,2,3 });
+	bombSprite->SetScale(0.4f);
 }
 
 void Bomb::Update(float deltaTime)
 {
-	bomBSprite->Update(deltaTime);
-	bomBSprite->SetAnimation(ANIM_BOMB);
+	bombSprite->Update(deltaTime);
+	bombSprite->SetAnimation(0);
 }
 
 void Bomb::Render()
 {
-	bomBSprite->Draw();
+	bombSprite->Draw();
+}
+
+int Bomb::getBombX()
+{
+	return bombX;
+}
+
+int Bomb::getBombY()
+{
+	return bombY;
 }
 
 
