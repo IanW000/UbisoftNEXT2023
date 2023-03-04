@@ -23,7 +23,6 @@ void Init()
 	//scene.Init(UISettings);
 	scene.Init();
 	gameManager.Init();
-	//UISettings.Init();
 	UISettings.Init(scene);
 }
 

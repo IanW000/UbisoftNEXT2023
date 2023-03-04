@@ -4,7 +4,7 @@
 #include <Graphics/Scene.h>
 
 
-UI::UI() : currentScreen(Screens::MAINMENU), failSFXPlayedOnce(false),winSFXPlayedOnce(false)
+UI::UI() : currentScreen(Screens::MAINMENU), failSFXPlayedOnce(false),winSFXPlayedOnce(false),m_scene(nullptr)
 {
 }
 
@@ -35,12 +35,6 @@ void UI::setCurrentScreen(Screens screen)
 {
 	currentScreen = screen;
 }
-
-//void UI::Init(Player& player)
-//{
-//	m_player = &player;
-//}
-
 
 //void UI::Update(float deltaTime, Player player, bool deadScreen)
 //{
@@ -147,9 +141,6 @@ void UI::Init(Scene &scene)
 	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 }
 
-//void UI::Init()
-//{
-//}
 
 void UI::Update(float deltaTime)
 {
