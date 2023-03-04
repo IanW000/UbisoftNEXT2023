@@ -5,6 +5,8 @@
 #include "HPBar/HPBar.h"
 #include <Object/Player/Player.h>
 
+class Scene;
+
 enum class Screens {
 	MAINMENU,
 	CONTROLS,
@@ -23,15 +25,16 @@ public:
 	Screens getCurrentScreen() const;
 	void CenteringPrint(float x, float y, const char* st, float r, float g, float b, void* font, bool center);
 	void setCurrentScreen(Screens screen);
-	//void Init(Player& player);
-	//void Update(float deltaTime, Player player, bool deadScreen);
 
 
-	void Init();
+	//void Init();
+	void Init(Scene &scene);
 	void Update(float deltaTime);
 	void Render();
+
 private:
 	//Player* m_player;
+	Scene *m_scene;
 	Screens currentScreen;
 	bool failSFXPlayedOnce, winSFXPlayedOnce;
 };

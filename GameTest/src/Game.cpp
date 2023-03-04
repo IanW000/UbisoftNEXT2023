@@ -20,22 +20,19 @@ UI UISettings;
 
 void Init()
 {
-
+	//scene.Init(UISettings);
 	scene.Init();
 	gameManager.Init();
-	UISettings.Init();
+	//UISettings.Init();
+	UISettings.Init(scene);
 }
 
 void Update(float deltaTime)
 {
-	//------------------------------------------------------------------------
-// Example Sprite Code....
 	scene.Update(deltaTime);
 	gameManager.Update(deltaTime);
 	UISettings.Update(deltaTime);
 }
-
-std::string debugLine;
 
 void Render()
 {
@@ -45,6 +42,5 @@ void Render()
 }
 
 void Shutdown()
-{	
-	//delete playerSprite;
+{
 }

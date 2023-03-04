@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "UI.h"
 
+#include <Graphics/Scene.h>
+
 
 UI::UI() : currentScreen(Screens::MAINMENU), failSFXPlayedOnce(false),winSFXPlayedOnce(false)
 {
@@ -139,12 +141,109 @@ void UI::setCurrentScreen(Screens screen)
 //	}
 //}
 
-void UI::Init()
+void UI::Init(Scene &scene)
 {
+	m_scene = &scene;
+	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 }
+
+//void UI::Init()
+//{
+//}
 
 void UI::Update(float deltaTime)
 {
+	switch (currentScreen) {
+	
+		case Screens::MAINMENU:
+			StartButton.Update(deltaTime);
+			ControlsButton.Update(deltaTime);
+			ExitButton.Update(deltaTime);
+	
+			if (StartButton.gameScreen) {
+				App::StopSound(".\\res\\Sound\\mainMenuBGM.wav");
+				App::PlaySound(".\\res\\Sound\\inGameBGM.wav", true);
+				setCurrentScreen(Screens::GAME);
+				StartButton.gameScreen = false;
+			}
+	
+			if (ControlsButton.controlsScreen) {
+				setCurrentScreen(Screens::CONTROLS);
+				ControlsButton.controlsScreen = false;
+			}
+			break;
+	
+		case Screens::CONTROLS:
+			BackButton.Update(deltaTime);
+	
+			if (BackButton.backToMainScreen) {
+				setCurrentScreen(Screens::MAINMENU);
+				BackButton.backToMainScreen = false;
+			}
+			break;
+	
+		case Screens::GAME:
+			PauseButton.Update(deltaTime);
+			hpBar.Update(deltaTime, m_scene->player);
+	
+			if (PauseButton.pause) {
+				setCurrentScreen(Screens::PAUSE);
+				PauseButton.pause = false;
+			}
+			break;
+	
+		case Screens::PAUSE:
+			BackButtonInGame.Update(deltaTime);
+			ResumeButton.Update(deltaTime);
+	
+			if (BackButtonInGame.backToMainScreen) {
+				App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
+				setCurrentScreen(Screens::MAINMENU);
+				BackButtonInGame.backToMainScreen = false;
+			}
+	
+			if (ResumeButton.resume) {
+				setCurrentScreen(Screens::GAME);
+				ResumeButton.resume = false;
+			}
+			break;
+	
+		case Screens::DEAD:
+	
+			BackButtonInGame.Update(deltaTime);
+	
+			if (!failSFXPlayedOnce) {
+				App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+				App::PlaySound(".\\res\\Sound\\fail.wav");
+				failSFXPlayedOnce = true;
+			}
+	
+			if (BackButtonInGame.backToMainScreen) {
+				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
+				setCurrentScreen(Screens::MAINMENU);
+				BackButtonInGame.backToMainScreen = false;
+				failSFXPlayedOnce = false;
+			}
+			break;
+	
+		case Screens::WIN:
+			//BackButtonInGame.Update(deltaTime);
+			//ResumeButton.Update(deltaTime);
+	
+			//if (BackButtonInGame.backToMainScreen) {
+			//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+			//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
+			//	setCurrentScreen(Screens::MAINMENU);
+			//	BackButtonInGame.backToMainScreen = false;
+			//}
+	
+			//if (ResumeButton.resume) {
+			//	setCurrentScreen(Screens::GAME);
+			//	ResumeButton.resume = false;
+			//}
+			break;
+		}
 }
 
 void UI::Render()

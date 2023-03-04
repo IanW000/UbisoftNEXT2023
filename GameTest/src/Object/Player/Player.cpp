@@ -45,7 +45,7 @@ void Player::Update(float deltaTime)
 {
 	playerSprite->Update(deltaTime);
 
-	if (App::GetController().GetLeftThumbStickX() > 0.5f)
+	if (App::IsKeyPressed('D'))
 	{
 		playerSprite->SetAnimation(ANIM_RIGHT);
 		float x, y;
@@ -53,7 +53,8 @@ void Player::Update(float deltaTime)
 		x += 1.0f;
 		playerSprite->SetPosition(x, y);
 	}
-	if (App::GetController().GetLeftThumbStickX() < -0.5f)
+
+	if (App::IsKeyPressed('A'))
 	{
 		playerSprite->SetAnimation(ANIM_LEFT);
 		float x, y;
@@ -61,7 +62,8 @@ void Player::Update(float deltaTime)
 		x -= 1.0f;
 		playerSprite->SetPosition(x, y);
 	}
-	if (App::GetController().GetLeftThumbStickY() > 0.5f)
+
+	if (App::IsKeyPressed('W'))
 	{
 		playerSprite->SetAnimation(ANIM_FORWARDS);
 		float x, y;
@@ -69,7 +71,8 @@ void Player::Update(float deltaTime)
 		y += 1.0f;
 		playerSprite->SetPosition(x, y);
 	}
-	if (App::GetController().GetLeftThumbStickY() < -0.5f)
+
+	if (App::IsKeyPressed('S'))
 	{
 		playerSprite->SetAnimation(ANIM_BACKWARDS);
 		float x, y;
@@ -78,18 +81,11 @@ void Player::Update(float deltaTime)
 		playerSprite->SetPosition(x, y);
 	}
 
-
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
-	{
-		playerSprite->SetAnimation(-1);
-	}
-
+	//place bomb
 	if (App::IsKeyPressed('J'))
 	{
 		//boom.x = 
 	}
-
-
 
 	if (App::IsKeyPressed('M'))
 	{
@@ -100,6 +96,7 @@ void Player::Update(float deltaTime)
 	{
 		Reset();
 	}
+
 	if (currentHP <= 0) {
 		currentHP = 0;
 		died = true;

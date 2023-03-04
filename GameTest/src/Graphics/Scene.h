@@ -1,6 +1,7 @@
 #pragma once
 #include <Math/Matrix/Matrix.h>
 #include <Object/Player/Player.h>
+#include <UI/UI.h>
 
 
 
@@ -16,7 +17,7 @@ class Scene
 {
 public:
 	Scene();
-
+	//UI &UISettings
 	void Init();
 	void Update(float deltaTime);
 	void Render();
@@ -28,8 +29,10 @@ public:
 	const static int COL = WIN_WIDTH / BLOCK_BRICK_SIZE;
 	const static int brickNum = 512;
 
+	//UI *UISettings;
+	Player *player;
+
 private:
 	Matrix Mat2D;
-	Player player;
 };
 

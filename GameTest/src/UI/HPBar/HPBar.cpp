@@ -55,8 +55,8 @@ void HPBar::CreateHPBar(float x, float y, float dx, float dy, Colors bgColor, Co
 	dx = x + (float)currentHP / 100 * 0.99f + 2 * interval;
 	glBegin(GL_QUADS);
 	col.SetColor(innerColor);
-	col.r = 255 - (float)currentHP / 100 * 255;
-	col.g = (float)currentHP / 100 * 255;
+	col.r = 255 - currentHP / 100 * 255;
+	col.g = currentHP / 100 * 255;
 	glColor3ub(col.r, col.g, col.b);
 	glVertex2f(x + interval, y + interval);
 	glVertex2f(x + interval, dy - interval);
@@ -86,9 +86,9 @@ void HPBar::Init()
 
 }
 
-void HPBar::Update(float deltaTime, Player player)
+void HPBar::Update(float deltaTime, Player *player)
 {
-	this->currentHP = player.currentHP;
+	this->currentHP =(*player).currentHP;
 }
 
 float getPercentageHP(int currentHP) {

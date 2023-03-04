@@ -24,9 +24,11 @@ struct Boom {
 Scene::Scene() 
 {
 }
-
+//UI &UISettings
 void Scene::Init()
 {
+	//this->UISettings = &UISettings;
+
 	boom.exist = false;
 	boom.explode = false;
 	boom.x = 0;
@@ -48,7 +50,7 @@ void Scene::Init()
 		}
 	}
 
-	player.Init(Mat2D);
+	(*player).Init(Mat2D);
 	
 	for (int i = 0; i < brickNum; i++) {
 		int r = Utils::RandomInt(1,ROW - 2);
@@ -103,7 +105,7 @@ void Scene::Init()
 void Scene::Update(float deltaTime)
 {
 	
-	player.Update(deltaTime);
+	(*player).Update(deltaTime);
 
 }
 
@@ -121,11 +123,11 @@ void Scene::Render()
 	}
 
 	
-	std::string debugLine = std::to_string(player.currentHP);
+	std::string debugLine = std::to_string((*player).currentHP);
 	App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
 	App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
 
 	//draw objects
 	bomBSprite->Draw();
-	player.Render();
+	(*player).Render();
 }
