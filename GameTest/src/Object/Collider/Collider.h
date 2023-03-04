@@ -6,6 +6,6 @@ class Collider
 
 	float radius;
 
-	//bool checkCollision()
+	bool checkCollision();
 };
 

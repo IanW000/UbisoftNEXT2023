@@ -4,3 +4,8 @@
 Collider::Collider() {
 
 }
+
+bool Collider::checkCollision()
+{
+	return false;
+}

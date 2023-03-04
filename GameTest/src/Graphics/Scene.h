@@ -28,7 +28,7 @@ public:
 	const static int BLOCK_BRICK_SIZE = 32;
 	const static int ROW = WIN_HEIGHT / BLOCK_BRICK_SIZE;
 	const static int COL = WIN_WIDTH / BLOCK_BRICK_SIZE;
-	const static int brickNum = 512;
+	const static int brickNum = 800;
 
 	UI * m_UISettings;
 	Player player;
@@ -38,6 +38,6 @@ private:
 
 	Matrix Mat2D;
 
-	std::vector<Bomb> m_Bombs;
+	std::vector<Bomb*> m_Bombs;
 };
 

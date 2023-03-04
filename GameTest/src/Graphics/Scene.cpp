@@ -12,7 +12,7 @@ std::vector<CSimpleSprite*> brickSprite;
 std::vector<CSimpleSprite*> blockSprite;
 std::vector<CSimpleSprite*> grassSprite;
 
-
+int testSave, testSave2;
 Scene::Scene() : m_UISettings(nullptr), deadScreen(false) 
 {
 }
@@ -27,28 +27,59 @@ void Scene::Init(UI& UISettings)
 	}
 
 	for (int i = 0; i < COL; i++) {
-		Mat2D(0, i) = Mat2D(ROW - 1,i) = BLOCK;
+		Mat2D(0, i) = Mat2D(ROW - 1, i) = BLOCK;
 	}
 
 	for (int i = 0; i < ROW; i++) {
 		for (int j = 0; j < COL; j++) {
 			if (i % 4 == 0 && j % 4 == 0) {
-				Mat2D(i,j) = BLOCK;
+				Mat2D(i, j) = BLOCK;
 			}
 		}
 	}
 
-	player.Init(Mat2D);
-	
 	for (int i = 0; i < brickNum; i++) {
-		int r = Utils::RandomInt(1,ROW - 2);
-		int c = Utils::RandomInt(1,COL - 2);
-		if(Mat2D(r,c) == SPACE)
+		int r = Utils::RandomInt(1, ROW - 2);
+		int c = Utils::RandomInt(1, COL - 2);
+		if (Mat2D(r, c) == SPACE)
 			Mat2D(r, c) = BRICK;
 	}
 
 
 
+
+
+
+		int x = Utils::RandomInt(2, Scene::COL - 3);
+		int y = Utils::RandomInt(2, Scene::ROW - 3);
+
+		testSave = x;
+		testSave2 = y;
+
+
+		Mat2D(y + 1, x + 1) = SPACE;
+		Mat2D(y + 1, x) = SPACE;
+		Mat2D(y + 1, x - 1) = SPACE;
+		Mat2D(y, x + 1) = SPACE;
+		Mat2D(y, x) = SPACE;
+		Mat2D(y, x - 1) = SPACE;
+		player.setX(x * Scene::BLOCK_BRICK_SIZE );
+		player.setY(y * Scene::BLOCK_BRICK_SIZE +55);
+
+
+
+
+
+
+	//int a[] = { 1 };
+	//{
+	//	
+	//		Matrix matrix[] = [(y + 1, x + 1)
+
+	//			
+
+
+		player.Init();
 
 	for (int i = 0; i < ROW; i++) {
 		for (int j = 0; j < COL; j++) {
@@ -84,7 +115,16 @@ void Scene::Init(UI& UISettings)
 			}
 		}
 	}
+
+
+
+	for (auto bombs : m_Bombs) {
+		(*bombs).Init(player.getX(), player.getY());
+	}
+
+
 }
+
 
 void Scene::Update(float deltaTime)
 {
@@ -99,16 +139,27 @@ void Scene::Update(float deltaTime)
 
 		case Screens::GAME:
 
-			player.Update(deltaTime);
+			player.Update(deltaTime,Mat2D);
 			break;
 	}
 
 	if (player.died && !deadScreen) {
 		deadScreen = true;
 
-	(*m_UISettings).setCurrentScreen(Screens::DEAD);
-}
+		(*m_UISettings).setCurrentScreen(Screens::DEAD);
+	}
+
+
+
+	if (App::IsKeyPressed('J'))
+	{
+		Bomb newBomb;
+		m_Bombs.push_back(&newBomb);
+	}
 	
+	for (auto bombs : m_Bombs) {
+		(*bombs).Update();
+	}
 }
 
 void Scene::Render()
@@ -124,11 +175,19 @@ void Scene::Render()
 		space->Draw();
 	}
 
-	
-	//std::string debugLine = std::to_string((*player).currentHP);
-	//App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
-	//App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
+	///BLOCK_BRICK_SIZE
+	std::string debugLine = std::to_string(testSave);
+
+
+	App::Print(40, 650, "Debug:", 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
+	App::Print(120, 650, debugLine.c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
+
+	App::Print(120, 630, std::to_string(testSave2).c_str(), 1.0f, .25f, .5f, GLUT_BITMAP_HELVETICA_18);
 
 	//draw objects
 	player.Render();
+
+	for (auto bombs : m_Bombs) {
+		(*bombs).Render();
+	}
 }
