@@ -18,7 +18,7 @@ class Scene
 public:
 	Scene();
 	//UI &UISettings
-	void Init();
+	void Init(UI& UISettings);
 	void Update(float deltaTime);
 	void Render();
 	
@@ -29,9 +29,9 @@ public:
 	const static int COL = WIN_WIDTH / BLOCK_BRICK_SIZE;
 	const static int brickNum = 512;
 
-	//UI *UISettings;
+	UI * m_UISettings;
 	Player player;
-
+	bool deadScreen = false;
 private:
 	Matrix Mat2D;
 };

@@ -2,7 +2,6 @@
   Game.cpp
   Scene.cpp
   Player.cpp
-  HPBar.cpp
   UI.cpp
   Generating Code...
   GameTest.vcxproj -> C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\build\x64\Debug\Game.exe

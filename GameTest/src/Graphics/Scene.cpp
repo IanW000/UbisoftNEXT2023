@@ -25,9 +25,9 @@ Scene::Scene()
 {
 }
 //UI &UISettings
-void Scene::Init()
+void Scene::Init(UI& UISettings)
 {
-	//this->UISettings = &UISettings;
+	m_UISettings = &UISettings;
 
 	boom.exist = false;
 	boom.explode = false;
@@ -105,8 +105,26 @@ void Scene::Init()
 void Scene::Update(float deltaTime)
 {
 	
-	player.Update(deltaTime);
+	switch ((*m_UISettings).getCurrentScreen()) {
 
+		case Screens::MAINMENU:
+
+			player.Reset();
+			deadScreen = false;
+			break;
+
+		case Screens::GAME:
+
+			player.Update(deltaTime);
+			break;
+	}
+
+	if (player.died && !deadScreen) {
+		deadScreen = true;
+
+	(*m_UISettings).setCurrentScreen(Screens::DEAD);
+}
+	
 }
 
 void Scene::Render()
