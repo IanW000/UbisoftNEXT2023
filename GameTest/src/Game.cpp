@@ -7,34 +7,35 @@
 #include <math.h>  
 //------------------------------------------------------------------------
 #include "app\app.h"
-#include <GameManager/GameManager.h>
 #include <vector>
-#include "Graphics/MapManager.h"
+#include <GameManager/GameManager.h>
 #include <UI/UI.h>
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <cmath>
+#include <set>
 //------------------------------------------------------------------------
 
+
 GameManager gameManager;
-MapManager mapMananger;
 UI UISettings;
 
 
 void Init()
 {
-	mapMananger.Init(UISettings);
-	gameManager.Init();
-	UISettings.Init(mapMananger);
+	gameManager.Init(UISettings);
+	UISettings.Init(gameManager);
 }
 
 void Update(float deltaTime)
 {
-	mapMananger.Update(deltaTime);
 	gameManager.Update(deltaTime);
 	UISettings.Update(deltaTime);
 }
 
 void Render()
 {
-	mapMananger.Render();
 	gameManager.Render();
 	UISettings.Render();
 }

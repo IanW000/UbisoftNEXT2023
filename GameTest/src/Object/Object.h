@@ -1,15 +1,21 @@
 #pragma once
-#include "Collider/Collider.h"
+#include <vector>
+
+class GameManager; 
+
 class Object
 {
 public:
+
 	Object();
 
-	int x, y;
-	Collider *collider;
+	virtual ~Object() = default;
 
-	//int x, y;
-	//Collider collider;
+	virtual void Init(GameManager & gameManager) = 0;
+
+	virtual void Update(GameManager& gameManager) = 0;
+
+    virtual void Render(GameManager& gameManager) = 0;
 
 };
 

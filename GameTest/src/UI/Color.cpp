@@ -2,8 +2,7 @@
 #include "Color.h"
 #include <Math/Utils.h>
 
-Color::Color() : r(255), g(255), b(255) {
-
+Color::Color() : r(0), g(0), b(0) {
 }
 
 void Color::SetColor(Colors color) {
@@ -61,12 +60,6 @@ void Color::SetColor(Colors color) {
 		r = 0;
 		g = 0;
 		b = 0;
-		break;
-
-	case Colors::Random:
-		r = Utils::RandomInt(0, 255);
-		g = Utils::RandomInt(0, 255);
-		b = Utils::RandomInt(0, 255);
 		break;
 	}
 }

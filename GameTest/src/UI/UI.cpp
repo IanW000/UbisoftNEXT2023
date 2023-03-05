@@ -1,145 +1,118 @@
 #include "stdafx.h"
 #include "UI.h"
 
-#include <Graphics/MapManager.h>
+#include <gameManager/gameManager.h>
+#include <string>
 
-
-UI::UI() : currentScreen(Screens::MAINMENU), failSFXPlayedOnce(false),winSFXPlayedOnce(false),m_mapManager(nullptr)
+UI::UI() : currentScreen(Screens::MAINMENU), failSFXPlayedOnce(false),winSFXPlayedOnce(false),m_gameManager(nullptr), bombsUp(1), speedUp(1), fireUp(1)
 {
 }
 
-Screens UI::getCurrentScreen() const
+void UI::Init(GameManager& gameManager)
 {
-	return currentScreen;
-}
-
-void UI::CenteringPrint(float x, float y, const char* st, float r, float g, float b, void* font, bool center)
-{
-#if APP_USE_VIRTUAL_RES		
-	APP_VIRTUAL_TO_NATIVE_COORDS(x, y);
-#endif		
-	// Set location to start printing text
-	glColor3f(r, g, b); // Yellow
-
-	int l = (int)strlen(st);
-	const float fontSize = 0.02f;
-
-	glRasterPos2f(x - l / 2 * fontSize, y);
-	for (int i = 0; i < l; i++)
-	{
-		glutBitmapCharacter(font, st[i]); // Print a character on the screen
-	}
-}
-
-void UI::setCurrentScreen(Screens screen)
-{
-	currentScreen = screen;
-}
-
-void UI::Init(MapManager& mapManager)
-{
-	m_mapManager = &mapManager;
+	m_gameManager = &gameManager;
+	m_player = gameManager.m_player;
 	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-}
 
+}
 
 void UI::Update(float deltaTime)
 {
 	switch (currentScreen) {
-	
-		case Screens::MAINMENU:
-			StartButton.Update(deltaTime);
-			ControlsButton.Update(deltaTime);
-			ExitButton.Update(deltaTime);
-	
-			if (StartButton.gameScreen) {
-				App::StopSound(".\\res\\Sound\\mainMenuBGM.wav");
-				App::PlaySound(".\\res\\Sound\\inGameBGM.wav", true);
-				setCurrentScreen(Screens::GAME);
-				m_mapManager->generateMap();
-				StartButton.gameScreen = false;
-			}
-	
-			if (ControlsButton.controlsScreen) {
-				setCurrentScreen(Screens::CONTROLS);
-				ControlsButton.controlsScreen = false;
-			}
-			break;
-	
-		case Screens::CONTROLS:
-			BackButton.Update(deltaTime);
-	
-			if (BackButton.backToMainScreen) {
-				setCurrentScreen(Screens::MAINMENU);
-				BackButton.backToMainScreen = false;
-			}
-			break;
-	
-		case Screens::GAME:
-			PauseButton.Update(deltaTime);
-			hpBar.Update(deltaTime, m_mapManager->player);
-	
-			if (PauseButton.pause) {
-				setCurrentScreen(Screens::PAUSE);
-				PauseButton.pause = false;
-			}
-			break;
-	
-		case Screens::PAUSE:
-			BackButtonInGame.Update(deltaTime);
-			ResumeButton.Update(deltaTime);
-	
-			if (BackButtonInGame.backToMainScreen) {
-				m_mapManager->resetMap();
-				App::StopSound(".\\res\\Sound\\inGameBGM.wav");
-				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-				setCurrentScreen(Screens::MAINMENU);
-				BackButtonInGame.backToMainScreen = false;
-			}
-	
-			if (ResumeButton.resume) {
-				setCurrentScreen(Screens::GAME);
-				ResumeButton.resume = false;
-			}
-			break;
-	
-		case Screens::DEAD:
-	
-			BackButtonInGame.Update(deltaTime);
-	
-			if (!failSFXPlayedOnce) {
-				App::StopSound(".\\res\\Sound\\inGameBGM.wav");
-				App::PlaySound(".\\res\\Sound\\fail.wav");
-				failSFXPlayedOnce = true;
-			}
-	
-			if (BackButtonInGame.backToMainScreen) {
-				m_mapManager->resetMap();
-				App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-				setCurrentScreen(Screens::MAINMENU);
-				BackButtonInGame.backToMainScreen = false;
-				failSFXPlayedOnce = false;
-			}
-			break;
-	
-		case Screens::WIN:
-			//BackButtonInGame.Update(deltaTime);
-			//ResumeButton.Update(deltaTime);
-	
-			//if (BackButtonInGame.backToMainScreen) {
-			// m_mapManager->resetMap();
-			//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
-			//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-			//	setCurrentScreen(Screens::MAINMENU);
-			//	BackButtonInGame.backToMainScreen = false;
-			//}
-	
-			//if (ResumeButton.resume) {
-			//	setCurrentScreen(Screens::GAME);
-			//	ResumeButton.resume = false;
-			//}
-			break;
+
+	case Screens::MAINMENU:
+		StartButton.Update(deltaTime);
+		ControlsButton.Update(deltaTime);
+		ExitButton.Update(deltaTime);
+
+		if (StartButton.gameScreen) {
+			App::StopSound(".\\res\\Sound\\mainMenuBGM.wav");
+			App::PlaySound(".\\res\\Sound\\inGameBGM.wav", true);
+			setCurrentScreen(Screens::GAME);
+			m_gameManager->generateMap();
+			StartButton.gameScreen = false;
 		}
+
+		if (ControlsButton.controlsScreen) {
+			setCurrentScreen(Screens::CONTROLS);
+			ControlsButton.controlsScreen = false;
+		}
+		break;
+
+	case Screens::CONTROLS:
+		BackButton.Update(deltaTime);
+
+		if (BackButton.backToMainScreen) {
+			setCurrentScreen(Screens::MAINMENU);
+			BackButton.backToMainScreen = false;
+		}
+		break;
+
+	case Screens::GAME:
+		PauseButton.Update(deltaTime);
+		hpBar.Update(deltaTime, m_gameManager->m_player);
+
+		if (PauseButton.pause) {
+			setCurrentScreen(Screens::PAUSE);
+			PauseButton.pause = false;
+		}
+		break;
+
+	case Screens::PAUSE:
+		BackButtonInGame.Update(deltaTime);
+		ResumeButton.Update(deltaTime);
+
+		if (BackButtonInGame.backToMainScreen) {
+			m_gameManager->resetMap();
+			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
+			setCurrentScreen(Screens::MAINMENU);
+			BackButtonInGame.backToMainScreen = false;
+		}
+
+		if (ResumeButton.resume) {
+			setCurrentScreen(Screens::GAME);
+			ResumeButton.resume = false;
+		}
+		break;
+
+	case Screens::DEAD:
+
+		BackButtonInGame.Update(deltaTime);
+
+		if (!failSFXPlayedOnce) {
+			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+			App::PlaySound(".\\res\\Sound\\fail.wav");
+			failSFXPlayedOnce = true;
+		}
+
+		if (BackButtonInGame.backToMainScreen) {
+			m_gameManager->resetMap();
+			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
+			setCurrentScreen(Screens::MAINMENU);
+			BackButtonInGame.backToMainScreen = false;
+			failSFXPlayedOnce = false;
+		}
+		break;
+
+	case Screens::WIN:
+		//BackButtonInGame.Update(deltaTime);
+		//ResumeButton.Update(deltaTime);
+
+		//if (BackButtonInGame.backToMainScreen) {
+		// gameManager->resetMap();
+		//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+		//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
+		//	setCurrentScreen(Screens::MAINMENU);
+		//	BackButtonInGame.backToMainScreen = false;
+		//}
+
+		//if (ResumeButton.resume) {
+		//	setCurrentScreen(Screens::GAME);
+		//	ResumeButton.resume = false;
+		//}
+		break;
+	}
 }
 
 void UI::Render()
@@ -180,13 +153,15 @@ void UI::Render()
 	case Screens::GAME:
 
 		hpBar.CreateHPBar((GLfloat)-0.98, (GLfloat)0.93, (GLfloat)0.02, (GLfloat)0.98, Colors::White, Colors::Green, Colors::Yellow);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 250, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, std::to_string(bombsUp).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH +50, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, std::to_string(fireUp).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 350, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, std::to_string(speedUp).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 300, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH, 0.5f * APP_INIT_WINDOW_HEIGHT - 300, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
-		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 300, "W - Move Forward", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, "Bombs:", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, "Fire:", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, "Speed:", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		PauseButton.CreateButton((GLfloat)0.88, (GLfloat)0.88, (GLfloat)0.98, (GLfloat)0.98, 0.5f * APP_INIT_WINDOW_WIDTH + 470, 0.5f * APP_INIT_WINDOW_HEIGHT + 350, "| |", Colors::Pink, ButtonType::PAUSE);
 
-		hpBar.Render();
 		PauseButton.Render();
 		break;
 
@@ -211,5 +186,49 @@ void UI::Render()
 		//ResumeButton.Render();
 		//BackButtonInGame.Render();
 		break;
+	}
+}
+
+
+void UI::setCurrentScreen(Screens screen)
+{
+	currentScreen = screen;
+}
+
+void UI::addBombsUp()
+{
+	bombsUp++;
+}
+
+void UI::addSpeedUp()
+{
+	speedUp++;
+}
+
+void UI::addFireUp()
+{
+	fireUp++;
+}
+
+Screens UI::getCurrentScreen() const
+{
+	return currentScreen;
+}
+
+void UI::CenteringPrint(float x, float y, const char* st, float r, float g, float b, void* font, bool center)
+{
+#if APP_USE_VIRTUAL_RES		
+	APP_VIRTUAL_TO_NATIVE_COORDS(x, y);
+#endif		
+	// Set location to start printing text
+	glColor3f(r, g, b); // Yellow
+
+	int l = (int)strlen(st);
+	const float fontSize = 0.02f;
+
+	glRasterPos2f(x - l / 2 * fontSize, y);
+	for (int i = 0; i < l; i++)
+	{
+		glutBitmapCharacter(font, st[i]); // Print a character on the screen
 	}
 }

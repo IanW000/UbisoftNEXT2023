@@ -1,34 +1,51 @@
 #pragma once
 
-enum BombState
-{
-	NORMAL,
-	EXPLOSION,
-	DISAPPEAR
-};
+#include <Object/Object.h>
 
-class Bomb
+struct Bomb : public Object
 {
 
 public:
 
-	Bomb();
+	const int TOTAL = 100;
 
-	void Init(int x, int y);
-	void Update(float deltaTime);
-	void Render();
+	virtual void Init(GameManager& gameManager) override;
 
-	int getBombX();
-	int getBombY();
+	virtual void Update(GameManager& gameManager) override;
+
+	virtual void Render(GameManager& gameManager) override;
+
+	void addBombPower();
+
+	void spawnBomb(GameManager& gameManager, float x, float y);
+
+	void Exploding(GameManager& gameManager, float x, float y);
+
+	GameManager* GetGameManager() const;
+
+	std::vector<int> m_ids;
+
+	int GetBegin() const;
+	int GetSize() const;
+
+	void SetScene(GameManager* scene);
+	void SetBegin(int num);
+	void SetSize(int num);
+	void SetEnd(int num);
+	bool Activate(int num);
+	bool Deactivate(int num);
+	void UpdateIds();
 
 private:
 
-	int bombX, bombY;
-	bool explosion;
-	int inventory;
-	int power;
+	int count = 0;
 
-	BombState bombState;
+	int BombPower = 1;
 
+	GameManager *m_gameManager;
+	int m_begin;
+	int m_size;
+	int m_end;
+	void SwapMemory(int num);
 };
 

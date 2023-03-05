@@ -2,6 +2,7 @@
 #include "App\app.h"
 #include "Button.h"
 #include <GameManager/GameManager.h>
+#include <Math/Utils.h>
 
 
 Button::Button() : x(0), y(0), dx(0), dy(0), textX(0), textY(0), text("INIT"), buttonColor(Colors::Pink), buttonType(ButtonType::START), hovering(false), clicked(false), hoverPlayedOnce(false), clickedPlayedOnce(false), gameScreen(false), controlsScreen(false), backToMainScreen(false), pause(false), resume(false)
@@ -53,7 +54,7 @@ void Button::CreateButton(float x, float y, float dx, float dy, float textX, flo
 
 void Button::Update(float deltaTime)
 {
-	if (GameManager::getMousePosition().x > x && GameManager::getMousePosition().y < -y && GameManager::getMousePosition().x < dx && GameManager::getMousePosition().y > -dy) {
+	if (Utils::getMousePosition().x > x && Utils::getMousePosition().y < -y && Utils::getMousePosition().x < dx && Utils::getMousePosition().y > -dy) {
 		hovering = true;
 		if (App::IsKeyPressed(VK_LBUTTON)) {
 			clicked = true;

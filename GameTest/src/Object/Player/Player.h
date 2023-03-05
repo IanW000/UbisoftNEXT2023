@@ -16,28 +16,41 @@ public:
 
 	Player();
 
-	int currentHP;
-	bool died;
-	void Reset();
-	void Init();
-	//void Init(Matrix Mat2d);
-	void Update(float deltaTime, Matrix Mat2d);
-	void Render();
+	virtual void Init(GameManager& gameManager) override;
+
+	virtual void Update(GameManager& gameManager) override;
+
+	virtual void Render(GameManager& gameManager) override;
+
 	int getX();
 	int getY();
+	int getHp();
+	bool checkDied();
+	float getSpeed();
+
 	void setX(int x);
 	void setY(int y);
-	void setPlayerLocation();
-	
+	void Reset();
+	void setLocation();
+	void setHP(int hp);
+	void addSpeed(float speed);
+	void setDied(bool died);
+
+	const static int PLAYER_WIDTH = 16;
+	const static int PLAYER_HEIGHT = 16;
+
+	int locX;
+	int locY;
 
 private:
-	Matrix m_Matrix;
-	int playerWidth;
-	int playerHeight;
-	int playerX;
-	int playerY;
-	float speed;
 
+
+
+	Matrix m_Matrix;
+
+	float speed;
+	int currentHP;
+	bool died;
 
 };
 

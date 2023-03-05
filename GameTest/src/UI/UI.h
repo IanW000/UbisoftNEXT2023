@@ -5,7 +5,7 @@
 #include "HPBar/HPBar.h"
 #include <Object/Player/Player.h>
 
-class MapManager;
+class GameManager;
 
 enum class Screens {
 	MAINMENU,
@@ -20,21 +20,23 @@ enum class Screens {
 class UI {
 public:
 	UI();
+	void Init(GameManager& gameManager);
+	void Update(float deltaTime);
+	void Render();
+
 	HPBar hpBar;
 	Button StartButton, ControlsButton, ExitButton, BackButton, PauseButton, BackButtonInGame, ResumeButton;
 	Screens getCurrentScreen() const;
 	void CenteringPrint(float x, float y, const char* st, float r, float g, float b, void* font, bool center);
 	void setCurrentScreen(Screens screen);
-
-
-	//void Init();
-	void Init(MapManager& mapManager);
-	void Update(float deltaTime);
-	void Render();
+	void addBombsUp();
+	void addSpeedUp();
+	void addFireUp();
 
 private:
-	//Player* m_player;
-	MapManager *m_mapManager;
+	Player m_player;
+	GameManager *m_gameManager;
 	Screens currentScreen;
 	bool failSFXPlayedOnce, winSFXPlayedOnce;
+	int bombsUp, speedUp, fireUp;
 };

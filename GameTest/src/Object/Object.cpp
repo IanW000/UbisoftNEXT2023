@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "Object.h"
+#include <gameManager/gameManager.h>
+#include <cassert>
 
-//Object::Object() {
-//}
-
-Object::Object() : x(0), y(0), collider(nullptr)
+Object::Object()
 {
 }
