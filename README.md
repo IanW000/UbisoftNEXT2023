@@ -10,17 +10,17 @@ BOMB! BOMB! BOMB! is a bomberman-like game made in C++ for the Ubisoft NEXT 2021
 
 ## Features
 
-#### Tilemap
+#### Tilemap - The game level is made by a tilemap which stored as a two-dimensional array. Each tile in the map is a Tile object, which contains the tile type, and corresponding image. For simplicity, a tile can be set to 3 types: GROUND, BLOCK, and BRICK
 
-#### Procedually Generated Map
+#### Procedually Generated Map - The map will be randomly generated with different objects placement in every game. And the player and enemy will be spawned dianogally to avoiding getting stuck 
 
-#### Bomb
+#### Bomb - The player use bombs to destroy enemies and uncover doors behind destructible tiles
 
-#### Enemy
+#### Enemy - Enemy will chase at player and place bombs
 
-#### Win/Fail Condition :
+#### Win/Fail Condition : The game will be end if player or enemy are getting killed by bombs
 
-#### UI
+#### UI - Screens for MAIN MENU, PAUSE, WIN, FAIL, CONTROLS. Interactive buttons with CLICK/HOVER Animations/SFX. HP Bars
 
 
 ## Installation and Usage
