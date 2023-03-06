@@ -1,17 +1,15 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\\build\x64\Debug\) contains files shared from another project (GameTest.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  PowerUp.cpp
-  Bomb.cpp
-  HPBar.cpp
-  Button.cpp
-  GameManager.cpp
-  Player.cpp
   Enemy.cpp
-C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(66,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(66,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(112,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(112,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Object.cpp
-  Game.cpp
-  UI.cpp
-  Generating Code...
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(160,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(160,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(481,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(481,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(481,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(481,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(488,47): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(492,46): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(496,46): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(500,46): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(502,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\src\Object\Enemy\Enemy.cpp(502,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   GameTest.vcxproj -> C:\Users\IAN\Desktop\NEXT_2023_Programming_IanWang\NEXT-API\UbisoftToronto-NEXT-API\NEXT-API\GameTest\build\x64\Debug\Game.exe

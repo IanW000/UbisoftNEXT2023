@@ -10,60 +10,16 @@
 CSimpleSprite* enemySprite;
 CSimpleSprite* enemyDiedSprite;
 
-bool Enemy::createEnemy()
+Enemy::Enemy() : currentHP(100), isDied(false), speed(1.0f), locX (0), locY(0)
 {
-	// Create a 2D array of nodes - this is for convenience of rendering and construction
-		// and is not required for the algorithm to work - the nodes could be placed anywhere
-		// in any space, in multiple dimensions...
-	nodes = new sNode[GameManager::WIN_WIDTH * GameManager::WIN_WIDTH];
-	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
-		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
-		{
-			nodes[y * GameManager::WIN_WIDTH + x].x = x; // ...because we give each node its own coordinates
-			nodes[y * GameManager::WIN_WIDTH + x].y = y;
-			nodes[y * GameManager::WIN_WIDTH + x].bObstacle = false;
-			nodes[y * GameManager::WIN_WIDTH + x].parent = nullptr;
-			nodes[y * GameManager::WIN_WIDTH + x].bVisited = false;
-		}
-
-	// Create connections - in this case nodes are on a regular grid
-	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
-		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
-		{
-			if (y > 0)
-				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y - 1) * GameManager::WIN_WIDTH + (x + 0)]);
-			if (y < GameManager::WIN_WIDTH - 1)
-				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y + 1) * GameManager::WIN_WIDTH + (x + 0)]);
-			if (x > 0)
-				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y + 0) * GameManager::WIN_WIDTH + (x - 1)]);
-			if (x < GameManager::WIN_WIDTH - 1)
-				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y + 0) * GameManager::WIN_WIDTH + (x + 1)]);
-
-			// We can also connect diagonally
-			/*if (y>0 && x>0)
-				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y - 1) * nMapWidth + (x - 1)]);
-			if (y<nMapHeight-1 && x>0)
-				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y + 1) * nMapWidth + (x - 1)]);
-			if (y>0 && x<nMapWidth-1)
-				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y - 1) * nMapWidth + (x + 1)]);
-			if (y<nMapHeight - 1 && x<nMapWidth-1)
-				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y + 1) * nMapWidth + (x + 1)]);
-			*/
-		}
-
-	// Manually positio the start and end markers so they are not nullptr
-	nodeStart = &nodes[(GameManager::WIN_WIDTH / 2) * GameManager::WIN_WIDTH + 1];
-	nodeEnd = &nodes[(GameManager::WIN_WIDTH / 2) * GameManager::WIN_WIDTH + GameManager::WIN_WIDTH - 2];
-	return true;
 }
-
 
 void Enemy::Init(GameManager& gameManager)
 {
-
+	
 	enemySprite = App::CreateSprite(".\\res\\Sprite\\Player.bmp", 4, 4);
 	enemyDiedSprite = App::CreateSprite(".\\res\\Sprite\\DeathAnimation.bmp", 6, 1);
-	enemySprite->SetPosition(locX,locY);
+	enemySprite->SetPosition((float)locX,(float)locY);
 	float playerSpeed = 1.0f / 15.0f;
 
 	enemySprite->CreateAnimation(ANIM_BACKWARDS, playerSpeed, { 4,5,6,7 });
@@ -74,6 +30,156 @@ void Enemy::Init(GameManager& gameManager)
 
 	enemyDiedSprite->CreateAnimation(0, playerSpeed * 2, { 0,1,2,3,4,5 });
 	enemyDiedSprite->SetScale(0.15f);
+
+}
+
+void Enemy::Update(GameManager& gameManager)
+{
+
+	const float elapsedTime = gameManager.GetTimeElapsed();
+	
+	enemyDiedSprite->Update(gameManager.GetDeltaTime());
+	enemySprite->Update(gameManager.GetDeltaTime());
+	enemyDiedSprite->SetAnimation(0);
+	enemySprite->SetAnimation(0);
+
+	if (currentHP <= 0) {
+		enemyDiedSprite->Update(gameManager.GetDeltaTime());
+		enemyDiedSprite->SetAnimation(0);
+		enemyDiedSprite->SetPosition((float)locX, (float)locY);
+		currentHP = 0;
+		isDied = true;
+	}
+
+
+	//DEBUGGING
+	if (App::IsKeyPressed('B'))
+	{
+		currentHP -= 1;
+	}
+
+	if (App::IsKeyPressed('I')) {
+
+		Movement(gameManager);
+	}
+
+	if (App::IsKeyPressed('V') && !findpathonce) {
+
+		//locX++;
+		//locY++;
+		//enemySprite->SetPosition(locX, locY);
+
+		findpathonce = true;
+		findPath(gameManager);
+	}
+
+	//	int nNodeSize = 9;
+	//	int nNodeBorder = 2;
+	//
+	//	// Use integer division to nicely get cursor position in node space
+	//	int nSelectedNodeX = 300;
+	//	int nSelectedNodeY = 300;
+	//
+	//
+	//
+	//	nodeStart = &nodes[300 * GameManager::WIN_WIDTH + 300];
+	//
+	//	nodeEnd = &nodes[500 * GameManager::WIN_WIDTH + 500];
+	//
+	//	for()
+	//
+	//	nodes[nSelectedNodeY * GameManager::WIN_WIDTH + nSelectedNodeX].bObstacle = !nodes[nSelectedNodeY * GameManager::WIN_WIDTH + nSelectedNodeX].bObstacle;
+	//
+	//	AStartPathFinding(); // Solve in "real-time" gives a nice effect
+	//
+	//	
+	//
+	//	// Draw Connections First - lines from this nodes position to its
+	//	// connected neighbour node positions
+	//
+	//	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
+	//		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
+	//		{
+	//			for (auto n : nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours)
+	//			{
+	//				DrawLine(x * nNodeSize + nNodeSize / 2, y * nNodeSize + nNodeSize / 2,
+	//					n->x * nNodeSize + nNodeSize / 2, n->y * nNodeSize + nNodeSize / 2, PIXEL_SOLID, FG_DARK_BLUE);
+	//			}
+	//		}
+	//
+	//	// Draw Nodes on top
+	//	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
+	//		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
+	//		{
+	//
+	//			Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder,
+	//				(x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder,
+	//				PIXEL_HALF, nodes[y * GameManager::WIN_WIDTH + x].bObstacle ? FG_WHITE : FG_BLUE);
+	//
+	//			if (nodes[y * GameManager::WIN_WIDTH + x].bVisited)
+	//				Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder, (x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder, PIXEL_SOLID, FG_BLUE);
+	//
+	//			if (&nodes[y * GameManager::WIN_WIDTH + x] == nodeStart)
+	//				Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder, (x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder, PIXEL_SOLID, FG_GREEN);
+	//
+	//			if (&nodes[y * GameManager::WIN_WIDTH + x] == nodeEnd)
+	//				Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder, (x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder, PIXEL_SOLID, FG_RED);
+	//
+	//		}
+	//
+	//
+	//
+	//	// Draw Path by starting ath the end, and following the parent node trail
+	//	// back to the start - the start node will not have a parent path to follow
+	//	if (nodeEnd != nullptr)
+	//	{
+	//		sNode* p = nodeEnd;
+	//		while (p->parent != nullptr)
+	//		{
+	//			DrawLine(p->x * nNodeSize + nNodeSize / 2, p->y * nNodeSize + nNodeSize / 2,
+	//				p->parent->x * nNodeSize + nNodeSize / 2, p->parent->y * nNodeSize + nNodeSize / 2, PIXEL_SOLID, FG_YELLOW);
+	//
+	//			// Set next node to this node's parent
+	//			p = p->parent;
+	//		}
+	//	}
+	//
+	//	return true;
+	//}
+
+}
+
+void Enemy::Render(GameManager& gameManager)
+{
+
+	float current = gameManager.GetTime();
+	Timer timer = gameManager.GetTimer(0);
+
+	if (timer.timeElapsed(current) > 5.0f)
+	{
+		gameManager.PlaceBomb(0,locX, locY);
+		Timer timer = gameManager.GetTimer(0);
+		timer.start = gameManager.GetTime();
+		gameManager.BomberTimer(0, timer);
+	}
+
+	moveTo(gameManager, gameManager.m_player.getX(), gameManager.m_player.getY());
+
+	//App::Print(100, 700, std::to_string(asdda).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(100, 720, std::to_string(gameManager.GetTimeElapsed()).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(100, 650, std::to_string(gameManager.GetTimeElapsed()).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18);
+
+	if (gameManager.getUI()->getCurrentScreen() == Screens::GAME || gameManager.getUI()->getCurrentScreen() == Screens::DEAD || gameManager.getUI()->getCurrentScreen() == Screens::PAUSE) {
+		if (checkDied()) {
+			enemyDiedSprite->Draw();
+			if (enemyDiedSprite->GetFrame() == 5) {
+				enemyDiedSprite->SetAnimation(-1);
+			}
+		}
+		else {
+			enemySprite->Draw();
+		}
+	}
 
 }
 
@@ -108,26 +214,30 @@ void Enemy::findPath(GameManager& gameManager){
 		locX = y * 32 + 16;
 		locY = x * 32 + 16;
 
-
-		enemySprite->SetPosition(locX, locY);
+		enemySprite->SetPosition((float)locX, (float)locY);
 	}
 }
 
 
 void Enemy::Movement(GameManager& gameManager) {
 
-	float current = gameManager.GetTime();
-	Timer timer = gameManager.GetTimer(0);
+	enemySprite->SetAnimation(ANIM_RIGHT);
+	float x, y;
+	enemySprite->GetPosition(x, y);
 
-	if (timer.timeElapsed(current) > 2.0f)
-	{
+	if (gameManager.Mat2D((int)(locY - 16.0f) / GameManager::BLOCK_BRICK_SIZE, (int)(locX - 16.0f) / GameManager::BLOCK_BRICK_SIZE) == SPACE) {
+		locX = (int)x;
+		float target = x + 200;
 
-		Timer timer = gameManager.GetTimer(0);
-		timer.start = gameManager.GetTime();
-		gameManager.BomberTimer(0, timer);
+		//while (x < target) {
+		//	x += speed * gameManager.GetDeltaTime()*0.000001f;
+		//	enemySprite->SetPosition(x, y);
+		//}
+
 	}
 
-		int rand = Utils::RandomInt(0, 100);
+
+		/*int rand = Utils::RandomInt(0, 100);
 		float x, y;
 		switch (rand / 25) {
 		case 1:
@@ -137,9 +247,9 @@ void Enemy::Movement(GameManager& gameManager) {
 			enemySprite->GetPosition(x, y);
 
 			if (gameManager.Mat2D((int)(locY - 16.0f) / GameManager::BLOCK_BRICK_SIZE, (int)(locX - 16.0f) / GameManager::BLOCK_BRICK_SIZE) == SPACE) {
-				locX = (int)x;
-				x -= speed;
-				enemySprite->SetPosition(x, y);
+				locX = x;
+				locX += gameManager.GetDeltaTime() * speed;
+				enemySprite->SetPosition(locX, y);
 
 			}
 			break;
@@ -179,134 +289,34 @@ void Enemy::Movement(GameManager& gameManager) {
 				enemySprite->SetPosition(x, y);
 			}
 			break;
-		}
+		}*/
+}
+
+bool Enemy::checkDied()
+{
+	return isDied;
+}
+
+void Enemy::setX(int x)
+{
+	locX = x;
+}
+
+void Enemy::setY(int y)
+{
+	locY = y;
+}
+
+int Enemy::getX()
+{
+	return locX;
+}
+
+int Enemy::getY()
+{
+	return locY;
 }
 			
-
-
-
-void Enemy::Update(GameManager& gameManager)
-{
-	enemyDiedSprite->Update(gameManager.GetDeltaTime());
-	enemySprite->Update(gameManager.GetDeltaTime());
-	enemyDiedSprite->SetAnimation(0);
-	enemySprite->SetAnimation(0);
-
-
-
-
-
-	if (App::IsKeyPressed('I')) {
-
-		Movement(gameManager);
-	}
-
-		if (App::IsKeyPressed('V') && !findpathonce) {
-
-			//locX++;
-			//locY++;
-			//enemySprite->SetPosition(locX, locY);
-
-			findpathonce = true;
-			findPath(gameManager);
-		}
-
-		//	int nNodeSize = 9;
-		//	int nNodeBorder = 2;
-		//
-		//	// Use integer division to nicely get cursor position in node space
-		//	int nSelectedNodeX = 300;
-		//	int nSelectedNodeY = 300;
-		//
-		//
-		//
-		//	nodeStart = &nodes[300 * GameManager::WIN_WIDTH + 300];
-		//
-		//	nodeEnd = &nodes[500 * GameManager::WIN_WIDTH + 500];
-		//
-		//	for()
-		//
-		//	nodes[nSelectedNodeY * GameManager::WIN_WIDTH + nSelectedNodeX].bObstacle = !nodes[nSelectedNodeY * GameManager::WIN_WIDTH + nSelectedNodeX].bObstacle;
-		//
-		//	AStartPathFinding(); // Solve in "real-time" gives a nice effect
-		//
-		//	
-		//
-		//	// Draw Connections First - lines from this nodes position to its
-		//	// connected neighbour node positions
-		//
-		//	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
-		//		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
-		//		{
-		//			for (auto n : nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours)
-		//			{
-		//				DrawLine(x * nNodeSize + nNodeSize / 2, y * nNodeSize + nNodeSize / 2,
-		//					n->x * nNodeSize + nNodeSize / 2, n->y * nNodeSize + nNodeSize / 2, PIXEL_SOLID, FG_DARK_BLUE);
-		//			}
-		//		}
-		//
-		//	// Draw Nodes on top
-		//	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
-		//		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
-		//		{
-		//
-		//			Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder,
-		//				(x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder,
-		//				PIXEL_HALF, nodes[y * GameManager::WIN_WIDTH + x].bObstacle ? FG_WHITE : FG_BLUE);
-		//
-		//			if (nodes[y * GameManager::WIN_WIDTH + x].bVisited)
-		//				Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder, (x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder, PIXEL_SOLID, FG_BLUE);
-		//
-		//			if (&nodes[y * GameManager::WIN_WIDTH + x] == nodeStart)
-		//				Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder, (x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder, PIXEL_SOLID, FG_GREEN);
-		//
-		//			if (&nodes[y * GameManager::WIN_WIDTH + x] == nodeEnd)
-		//				Fill(x * nNodeSize + nNodeBorder, y * nNodeSize + nNodeBorder, (x + 1) * nNodeSize - nNodeBorder, (y + 1) * nNodeSize - nNodeBorder, PIXEL_SOLID, FG_RED);
-		//
-		//		}
-		//
-		//
-		//
-		//	// Draw Path by starting ath the end, and following the parent node trail
-		//	// back to the start - the start node will not have a parent path to follow
-		//	if (nodeEnd != nullptr)
-		//	{
-		//		sNode* p = nodeEnd;
-		//		while (p->parent != nullptr)
-		//		{
-		//			DrawLine(p->x * nNodeSize + nNodeSize / 2, p->y * nNodeSize + nNodeSize / 2,
-		//				p->parent->x * nNodeSize + nNodeSize / 2, p->parent->y * nNodeSize + nNodeSize / 2, PIXEL_SOLID, FG_YELLOW);
-		//
-		//			// Set next node to this node's parent
-		//			p = p->parent;
-		//		}
-		//	}
-		//
-		//	return true;
-		//}
-
-}
-
-void Enemy::Render(GameManager& gameManager)
-{
-	pair<int, int> haha = make_pair(1, 2);
-
-	App::Print(100, 700, std::to_string(haha.first).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18);
-	App::Print(100, 720, std::to_string(haha.second).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18);
-
-	if (gameManager.getUI()->getCurrentScreen() == Screens::GAME || gameManager.getUI()->getCurrentScreen() == Screens::DEAD) {
-		if (checkDied()) {
-			enemyDiedSprite->Draw();
-			if (enemyDiedSprite->GetFrame() == 5) {
-				enemyDiedSprite->SetAnimation(-1);
-			}
-		}
-		else {
-			enemySprite->Draw();
-		}
-	}
-
-}
 
 //bool Enemy::AStartPathFinding()
 //{
@@ -397,6 +407,97 @@ void Enemy::Render(GameManager& gameManager)
 //	return true;
 //}
 
+bool Enemy::createEnemy()
+{
+	// Create a 2D array of nodes - this is for convenience of rendering and construction
+		// and is not required for the algorithm to work - the nodes could be placed anywhere
+		// in any space, in multiple dimensions...
+	nodes = new sNode[GameManager::WIN_WIDTH * GameManager::WIN_WIDTH];
+	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
+		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
+		{
+			nodes[y * GameManager::WIN_WIDTH + x].x = x; // ...because we give each node its own coordinates
+			nodes[y * GameManager::WIN_WIDTH + x].y = y;
+			nodes[y * GameManager::WIN_WIDTH + x].bObstacle = false;
+			nodes[y * GameManager::WIN_WIDTH + x].parent = nullptr;
+			nodes[y * GameManager::WIN_WIDTH + x].bVisited = false;
+		}
+
+	// Create connections - in this case nodes are on a regular grid
+	for (int x = 0; x < GameManager::WIN_WIDTH; x++)
+		for (int y = 0; y < GameManager::WIN_WIDTH; y++)
+		{
+			if (y > 0)
+				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y - 1) * GameManager::WIN_WIDTH + (x + 0)]);
+			if (y < GameManager::WIN_WIDTH - 1)
+				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y + 1) * GameManager::WIN_WIDTH + (x + 0)]);
+			if (x > 0)
+				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y + 0) * GameManager::WIN_WIDTH + (x - 1)]);
+			if (x < GameManager::WIN_WIDTH - 1)
+				nodes[y * GameManager::WIN_WIDTH + x].vecNeighbours.push_back(&nodes[(y + 0) * GameManager::WIN_WIDTH + (x + 1)]);
+
+			// We can also connect diagonally
+			/*if (y>0 && x>0)
+				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y - 1) * nMapWidth + (x - 1)]);
+			if (y<nMapHeight-1 && x>0)
+				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y + 1) * nMapWidth + (x - 1)]);
+			if (y>0 && x<nMapWidth-1)
+				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y - 1) * nMapWidth + (x + 1)]);
+			if (y<nMapHeight - 1 && x<nMapWidth-1)
+				nodes[y*nMapWidth + x].vecNeighbours.push_back(&nodes[(y + 1) * nMapWidth + (x + 1)]);
+			*/
+		}
+
+	// Manually positio the start and end markers so they are not nullptr
+	nodeStart = &nodes[(GameManager::WIN_WIDTH / 2) * GameManager::WIN_WIDTH + 1];
+	nodeEnd = &nodes[(GameManager::WIN_WIDTH / 2) * GameManager::WIN_WIDTH + GameManager::WIN_WIDTH - 2];
+	return true;
+}
+
+
 void Enemy::setLocation() {
 	enemySprite->SetPosition((float)locX, (float)locY);
+}
+void Enemy::Reset() {
+	speed = 1;
+	currentHP = 100;
+	isDied = false;
+}
+
+int Enemy::getHp() {
+	return currentHP;
+}
+
+void Enemy::setHP(int hp) {
+	currentHP -= hp;
+}
+
+
+// Define a constant speed for the enemy to move at
+const float ENEMY_SPEED = 100.0f;
+
+void Enemy::moveTo(GameManager& gameManager, int targetX, int targetY)
+{
+	float distance = Utils::Distance(locX, locY, targetX, targetY);
+	// If the enemy is already at the target position, don't move
+	if (distance == 0.0f) {
+		return;
+	}
+	if (locX < targetX) {
+		enemySprite->SetAnimation(ANIM_RIGHT);
+		locX +=  speed * gameManager.GetDeltaTime() * 0.1f;
+	}
+	else if (locX > targetX) {
+		enemySprite->SetAnimation(ANIM_LEFT);
+		locX -= speed * gameManager.GetDeltaTime() * 0.1f;
+	}
+	if (locY < targetX) {
+		enemySprite->SetAnimation(ANIM_FORWARDS);
+		locY += speed * gameManager.GetDeltaTime() * 0.1f;
+	}
+	else if (locY > targetX) {
+		enemySprite->SetAnimation(ANIM_BACKWARDS);
+		locY -= speed * gameManager.GetDeltaTime() * 0.1f;
+	}
+	enemySprite->SetPosition(locX, locY);
 }

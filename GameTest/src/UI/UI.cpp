@@ -50,7 +50,8 @@ void UI::Update(float deltaTime)
 
 	case Screens::GAME:
 		PauseButton.Update(deltaTime);
-		hpBar.Update(deltaTime, m_gameManager->m_player);
+		playerHP.Update(m_gameManager->m_player.getHp());
+		enemyHP.Update(m_gameManager->m_enemy.getHp());
 
 		if (PauseButton.pause) {
 			setCurrentScreen(Screens::PAUSE);
@@ -64,6 +65,9 @@ void UI::Update(float deltaTime)
 
 		if (BackButtonInGame.backToMainScreen) {
 			m_gameManager->resetMap();
+			bombsUp = 1;
+			speedUp = 1;
+			fireUp = 1;
 			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
 			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 			setCurrentScreen(Screens::MAINMENU);
@@ -88,6 +92,9 @@ void UI::Update(float deltaTime)
 
 		if (BackButtonInGame.backToMainScreen) {
 			m_gameManager->resetMap();
+			bombsUp = 1;
+			speedUp = 1;
+			fireUp = 1;
 			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
 			setCurrentScreen(Screens::MAINMENU);
 			BackButtonInGame.backToMainScreen = false;
@@ -96,21 +103,25 @@ void UI::Update(float deltaTime)
 		break;
 
 	case Screens::WIN:
-		//BackButtonInGame.Update(deltaTime);
-		//ResumeButton.Update(deltaTime);
 
-		//if (BackButtonInGame.backToMainScreen) {
-		// gameManager->resetMap();
-		//	App::StopSound(".\\res\\Sound\\inGameBGM.wav");
-		//	App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
-		//	setCurrentScreen(Screens::MAINMENU);
-		//	BackButtonInGame.backToMainScreen = false;
-		//}
+		BackButtonInGame.Update(deltaTime);
 
-		//if (ResumeButton.resume) {
-		//	setCurrentScreen(Screens::GAME);
-		//	ResumeButton.resume = false;
-		//}
+		if (!failSFXPlayedOnce) {
+			App::StopSound(".\\res\\Sound\\inGameBGM.wav");
+			App::PlaySound(".\\res\\Sound\\fail.wav");
+			failSFXPlayedOnce = true;
+		}
+
+		if (BackButtonInGame.backToMainScreen) {
+			m_gameManager->resetMap();
+			bombsUp = 1;
+			speedUp = 1;
+			fireUp = 1;
+			App::PlaySound(".\\res\\Sound\\mainMenuBGM.wav", true);
+			setCurrentScreen(Screens::MAINMENU);
+			BackButtonInGame.backToMainScreen = false;
+			failSFXPlayedOnce = false;
+		}
 		break;
 	}
 }
@@ -152,15 +163,22 @@ void UI::Render()
 
 	case Screens::GAME:
 
-		hpBar.CreateHPBar((GLfloat)-0.98, (GLfloat)0.93, (GLfloat)0.02, (GLfloat)0.98, Colors::White, Colors::Green, Colors::Yellow);
+		playerHP.CreateHPBar((GLfloat)-0.98, (GLfloat)0.93, (GLfloat)0.02, (GLfloat)0.98, 745, Colors::White, Colors::Green, Colors::Yellow);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 250, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, std::to_string(bombsUp).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH +50, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, std::to_string(fireUp).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 350, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, std::to_string(speedUp).c_str(), (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 
+		App::Print(20, 745, "P1", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
+
+
+		enemyHP.CreateHPBar((GLfloat)-0.98, (GLfloat)-0.85, (GLfloat)0.02, (GLfloat)-0.80,60, Colors::White, Colors::Green, Colors::Yellow);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, "Bombs:", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, "Fire:", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH + 300, 0.5f * APP_INIT_WINDOW_HEIGHT - 370, "Speed:", (float)0 / 255, (float)191 / 255, (float)255 / 255, GLUT_BITMAP_HELVETICA_18, true);
 		PauseButton.CreateButton((GLfloat)0.88, (GLfloat)0.88, (GLfloat)0.98, (GLfloat)0.98, 0.5f * APP_INIT_WINDOW_WIDTH + 470, 0.5f * APP_INIT_WINDOW_HEIGHT + 350, "| |", Colors::Pink, ButtonType::PAUSE);
+
+
+		App::Print(20, 60, "P2", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
 
 		PauseButton.Render();
 		break;
@@ -175,16 +193,15 @@ void UI::Render()
 
 	case Screens::DEAD:
 		BackButtonInGame.CreateButton((GLfloat)-0.2, (GLfloat)0.25, (GLfloat)0.2, (GLfloat)0.35, 0.5f * APP_INIT_WINDOW_WIDTH - 80, 0.5f * APP_INIT_WINDOW_HEIGHT + 110, "Back to Main Menu", Colors::Pink, ButtonType::BACK);
-
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH - 20, 0.5f * APP_INIT_WINDOW_HEIGHT + 200, "YOU LOSE!", 1.0f, .25f, .5f, GLUT_BITMAP_TIMES_ROMAN_24, true);
 		BackButtonInGame.Render();
 		break;
 
 	case Screens::WIN:
-		//ResumeButton.CreateButton((GLfloat)0.7, (GLfloat)0.7, (GLfloat)0.8, (GLfloat)0.8, 0.5f * APP_INIT_WINDOW_WIDTH + 375, 0.5f * APP_INIT_WINDOW_HEIGHT + 282, " > ", Colors::Pink, ButtonType::RESUME);
-		//BackButtonInGame.CreateButton((GLfloat)-0.2, (GLfloat)0.25, (GLfloat)0.2, (GLfloat)0.35, 0.5f * APP_INIT_WINDOW_WIDTH - 80, 0.5f * APP_INIT_WINDOW_HEIGHT + 110, "Back to Main Menu", Colors::Pink, ButtonType::BACK);
 
-		//ResumeButton.Render();
-		//BackButtonInGame.Render();
+		BackButtonInGame.CreateButton((GLfloat)-0.2, (GLfloat)0.25, (GLfloat)0.2, (GLfloat)0.35, 0.5f * APP_INIT_WINDOW_WIDTH - 80, 0.5f * APP_INIT_WINDOW_HEIGHT + 110, "Back to Main Menu", Colors::Pink, ButtonType::BACK);
+		UI::CenteringPrint(0.5f * APP_INIT_WINDOW_WIDTH -20, 0.5f * APP_INIT_WINDOW_HEIGHT + 200, "YOU WIN!", 1.0f, .25f, .5f, GLUT_BITMAP_TIMES_ROMAN_24, true);
+		BackButtonInGame.Render();
 		break;
 	}
 }

@@ -7,9 +7,9 @@ HPBar::HPBar() : currentHP(100), percent(1.0f), x(0.0f), y(0.0f), dx(0.0f), dy(0
 {
 }
 
-void HPBar::Update(float deltaTime, Player player)
+void HPBar::Update(int HP)
 {
-	this->currentHP = player.getHp();
+	this->currentHP = HP;
 }
 
 float getPercentageHP(int currentHP) {
@@ -25,7 +25,7 @@ float HPBar::rightAlign(int HP) {
 	return moveRight;
 }
 
-void HPBar::CreateHPBar(float x, float y, float dx, float dy, Colors bgColor, Colors innerColor, Colors hpLoseColor)
+void HPBar::CreateHPBar(float x, float y, float dx, float dy,float Y, Colors bgColor, Colors innerColor, Colors hpLoseColor)
 {
 
 	this->x = x;
@@ -72,7 +72,7 @@ void HPBar::CreateHPBar(float x, float y, float dx, float dy, Colors bgColor, Co
 	glEnd();
 
 	//HP Text
-	App::Print(560 - rightAlign(currentHP), 745, std::to_string(currentHP).c_str(), (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
-	App::Print(570, 745, "/", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
-	App::Print(580, 745, "100", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(560 - rightAlign(currentHP), Y, std::to_string(currentHP).c_str(), (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(570, Y, "/", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
+	App::Print(580, Y, "100", (float)255 / 255, (float)0 / 255, (float)0 / 255, GLUT_BITMAP_HELVETICA_18);
 }

@@ -27,14 +27,16 @@ public:
 	int getHp();
 	bool checkDied();
 	float getSpeed();
-
-	void setX(int x);
-	void setY(int y);
+	
 	void Reset();
+	void setX(int);
+	void setY(int y);	
+
+	void reset();
 	void setLocation();
-	void setHP(int hp);
+	void setHP(int loseHp);
 	void addSpeed(float speed);
-	void setDied(bool died);
+	void setDied(bool isDied);
 
 	const static int PLAYER_WIDTH = 16;
 	const static int PLAYER_HEIGHT = 16;
@@ -50,7 +52,7 @@ private:
 
 	float speed;
 	int currentHP;
-	bool died;
+	bool isDied;
 
 };
 

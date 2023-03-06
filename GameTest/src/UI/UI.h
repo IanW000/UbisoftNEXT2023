@@ -24,7 +24,8 @@ public:
 	void Update(float deltaTime);
 	void Render();
 
-	HPBar hpBar;
+	HPBar playerHP;
+	HPBar enemyHP;
 	Button StartButton, ControlsButton, ExitButton, BackButton, PauseButton, BackButtonInGame, ResumeButton;
 	Screens getCurrentScreen() const;
 	void CenteringPrint(float x, float y, const char* st, float r, float g, float b, void* font, bool center);

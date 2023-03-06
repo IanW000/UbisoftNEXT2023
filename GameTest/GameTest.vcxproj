@@ -185,7 +185,6 @@
     <ClInclude Include="src\Object\Bomb\Bomb.h" />
     <ClInclude Include="src\Math\Matrix\Matrix.h" />
     <ClInclude Include="src\UI\HPBar\HPBar.h" />
-    <ClInclude Include="src\Object\AI\AI.h" />
     <ClInclude Include="src\UI\Color.h" />
     <ClInclude Include="src\GameManager\GameManager.h" />
     <ClInclude Include="src\UI\Button\Button.h" />
@@ -212,7 +211,6 @@
     <ClCompile Include="src\Object\Bomb\Bomb.cpp" />
     <ClCompile Include="src\Math\Matrix\Matrix.cpp" />
     <ClCompile Include="src\UI\HPBar\HPBar.cpp" />
-    <ClCompile Include="src\Object\AI\AI.cpp" />
     <ClCompile Include="src\UI\Color.cpp" />
     <ClCompile Include="src\UI\Button\Button.cpp" />
     <ClCompile Include="src\GameManager\GameManager.cpp" />

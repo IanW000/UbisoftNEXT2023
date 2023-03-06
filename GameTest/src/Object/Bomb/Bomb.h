@@ -35,6 +35,7 @@ public:
 	bool Activate(int num);
 	bool Deactivate(int num);
 	void UpdateIds();
+	void Reset();
 
 private:
 

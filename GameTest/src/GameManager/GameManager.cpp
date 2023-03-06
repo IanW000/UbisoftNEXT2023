@@ -7,7 +7,7 @@
 std::vector<CSimpleSprite*> brickSprite;
 std::vector<CSimpleSprite*> blockSprite;
 
-GameManager::GameManager() : m_UISettings(nullptr), deadScreen(false) ,m_deltaTime(0.0f)
+GameManager::GameManager() : m_UISettings(nullptr), deadScreen(false), winScreen(false), m_deltaTime(0.0f),m_id(0),m_timeElapsed(0.0f),timeElapsed(0.0f)
 {
 	m_start = std::chrono::steady_clock::now();
 	m_current = m_start;
@@ -28,8 +28,10 @@ void GameManager::Update(float deltaTime)
 {
 	SetTime(deltaTime);
 
+	m_timeElapsed += deltaTime;
+
 	if(App::IsKeyPressed('J') ){
-		PlaceBomb(0);
+		PlaceBomb(0, m_player.locX,m_player.locY);
 	}
 
 	switch ((*m_UISettings).getCurrentScreen()) {
@@ -38,12 +40,12 @@ void GameManager::Update(float deltaTime)
 			glClearColor((float)0 / 255, (float)70 / 255, (float)0 / 255, 1);
 			m_player.Reset();
 			m_enemy.Reset();
-			deadScreen = false;
 			break;
 
 		case Screens::GAME:
 			glClearColor((float)0/255, (float)100/255, (float)0/255, 1);
-
+			deadScreen = false;
+			winScreen = false;
 			m_player.Update(*this);
 			m_enemy.Update(*this);
 			m_bomb.Update(*this);
@@ -65,6 +67,12 @@ void GameManager::Update(float deltaTime)
 		(*m_UISettings).setCurrentScreen(Screens::DEAD);
 	}
 
+	if (m_enemy.checkDied() && !winScreen) {
+
+		winScreen = true;
+		(*m_UISettings).setCurrentScreen(Screens::WIN);
+	}
+
 }
 
 void GameManager::Render()
@@ -81,7 +89,7 @@ void GameManager::Render()
 	m_player.Render(*this);
 	m_enemy.Render(*this);
 
-	if (getUI()->getCurrentScreen() == Screens::GAME) {
+	if (getUI()->getCurrentScreen() == Screens::GAME|| getUI()->getCurrentScreen() == Screens::PAUSE) {
 		m_bomb.Render(*this);
 		m_powerUp.Render(*this);
 	}
@@ -206,17 +214,17 @@ void GameManager::UpdateMap(int xaxis, int yaxis) {
 }
 
 
-void GameManager::PlaceBomb(int id)
+void GameManager::PlaceBomb(int id, float x, float y)
 {
 
 	float current = GetTime();
 
 	Timer timer = GetTimer(id);
 
-	int xaxis = (int)(m_player.getX() - 16) / BLOCK_BRICK_SIZE;
-	int yaxis = (int)(m_player.getY() - 16) / BLOCK_BRICK_SIZE;
-	float bombX = (int)m_player.getX() / BLOCK_BRICK_SIZE * 32 + 16.0f;
-	float bombY = (int)m_player.getY() / BLOCK_BRICK_SIZE * 32 + 16.0f;
+	int xaxis = (int)(x - 16) / BLOCK_BRICK_SIZE;
+	int yaxis = (int)(y - 16) / BLOCK_BRICK_SIZE;
+	float bombX = (int)x / BLOCK_BRICK_SIZE * 32 + 16.0f;
+	float bombY = (int)y / BLOCK_BRICK_SIZE * 32 + 16.0f;
 
 	if (timer.timeElapsed(current) > timer.cooldown)
 	{
@@ -279,6 +287,11 @@ Enemy& GameManager::GetEnemy()
 void GameManager::BomberTimer(int id, Timer timer)
 {
 	m_timer[id] = timer;
+}
+
+float GameManager::GetTimeElapsed() const
+{
+	return m_timeElapsed;
 }
 
 int GameManager::CreateId()

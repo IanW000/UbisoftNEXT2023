@@ -7,10 +7,10 @@ public:
 
 	HPBar();
 
-	void Update(float deltaTime, Player player);
+	void Update(int HP);
 
 	float rightAlign(int HP);
-	void CreateHPBar(float x, float y, float dx, float dy, Colors bgColor, Colors innerColor, Colors hpLoseColor);
+	void CreateHPBar(float x, float y, float dx, float dy, float Y, Colors bgColor, Colors innerColor, Colors hpLoseColor);
 
 private:
 	const float interval = 0.005f;

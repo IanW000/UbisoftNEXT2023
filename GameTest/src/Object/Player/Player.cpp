@@ -8,14 +8,15 @@ CSimpleSprite* playerSprite;
 CSimpleSprite* diedSprite;
 
 
-Player::Player() : currentHP(100), died(false), locX(-50), locY(-50), speed(1.0f)
+Player::Player() : currentHP(100), isDied(false), locX(-50), locY(-50), speed(1.0f)
 {
 }
 
 void Player::Reset()
 {
 	currentHP = 100;
-	died = false;
+	isDied = false;
+	speed = 1;
 }
 
 void Player::Init(GameManager& gameManager)
@@ -41,7 +42,7 @@ void Player::Update(GameManager& gameManager)
 	playerSprite->Update(gameManager.GetDeltaTime());
 
 	//movement
-	if(!died)
+	if(!isDied)
 	{	
 		if (App::IsKeyPressed('D'))
 		{
@@ -108,14 +109,14 @@ void Player::Update(GameManager& gameManager)
 		diedSprite->SetAnimation(0);
 		diedSprite->SetPosition((float)locX, (float)locY);
 		currentHP = 0;
-		died = true;
+		isDied = true;
 	}
 }
 
 void Player::Render(GameManager& gameManager)
 {
-	if (gameManager.getUI()->getCurrentScreen() == Screens::GAME|| gameManager.getUI()->getCurrentScreen() == Screens::DEAD) {
-		if (died) {
+	if (gameManager.getUI()->getCurrentScreen() == Screens::GAME|| gameManager.getUI()->getCurrentScreen() == Screens::DEAD || gameManager.getUI()->getCurrentScreen() == Screens::PAUSE) {
+		if (isDied) {
 			diedSprite->Draw();
 			if (diedSprite->GetFrame() == 5) {
 				diedSprite->SetAnimation(-1);
@@ -154,7 +155,7 @@ void Player::setHP(int loseHp) {
 
 bool Player::checkDied()
 {
-	return died;
+	return isDied;
 }
 
 float Player::getSpeed()
@@ -169,7 +170,7 @@ void Player::addSpeed(float speed)
 
 void Player::setDied(bool died)
 {
-	this->died = died;
+	this->isDied = isDied;
 }
 
 

@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------
 #include "app\app.h"
 #include <vector>
+#include <Math/Utils.h>
 #include <GameManager/GameManager.h>
 #include <UI/UI.h>
 #include <iostream>
@@ -15,12 +16,11 @@
 #include <queue>
 #include <cmath>
 #include <set>
+#include <list>
 //------------------------------------------------------------------------
-
 
 GameManager gameManager;
 UI UISettings;
-
 
 void Init()
 {
@@ -30,12 +30,14 @@ void Init()
 
 void Update(float deltaTime)
 {
+	//OnUserUpdate(gameManager.GetDeltaTime());
 	gameManager.Update(deltaTime);
 	UISettings.Update(deltaTime);
 }
 
 void Render()
 {
+	
 	gameManager.Render();
 	UISettings.Render();
 }
@@ -43,3 +45,9 @@ void Render()
 void Shutdown()
 {
 }
+
+
+
+
+
+

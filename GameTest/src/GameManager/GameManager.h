@@ -1,7 +1,5 @@
 #pragma once
 #include <chrono>
-
-#include <Object/AI/AI.h>
 #include <Math/Matrix/Matrix.h>
 #include <Object/Player/Player.h>
 #include <Object/Bomb/Bomb.h>
@@ -33,12 +31,14 @@ public:
 	void resetMap();
 	void UpdateMap(int xaxis,int yaxis);
 
+
+	float GetTimeElapsed() const;
 	int CreateId();
 	void SetTime(float deltaTime);
 	float GetDeltaTime() const;
 	float GetTime() const;
 	void SetPause(std::chrono::time_point<std::chrono::steady_clock> pause);
-	void PlaceBomb(int id);
+	void PlaceBomb(int id, float x, float y);
 	
 	const static int WIN_WIDTH = 1024;
 	const static int WIN_HEIGHT = 768;
@@ -53,6 +53,7 @@ public:
 	Bomb m_bomb;
 	PowerUp m_powerUp;
 	bool deadScreen;
+	bool winScreen;
 	Matrix Mat2D;
 
 	UI* getUI();
@@ -68,9 +69,11 @@ private:
 
 	int m_id;
 	float m_deltaTime;
+	float timeElapsed;
 	std::chrono::time_point<std::chrono::steady_clock> m_start;
 	std::chrono::time_point<std::chrono::steady_clock> m_current;
 	std::chrono::duration<float> m_time;
 	std::vector<Timer> m_timer;
+	float m_timeElapsed;
 };
 
