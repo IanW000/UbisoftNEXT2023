@@ -22,15 +22,15 @@ public:
 
 	virtual void Render(GameManager& gameManager) override;
 
-	int getX();
-	int getY();
+	float getX();
+	float getY();
 	int getHp();
 	bool checkDied();
 	float getSpeed();
 	
 	void Reset();
-	void setX(int);
-	void setY(int y);	
+	void setX(float);
+	void setY(float y);
 
 	void reset();
 	void setLocation();
@@ -41,8 +41,7 @@ public:
 	const static int PLAYER_WIDTH = 16;
 	const static int PLAYER_HEIGHT = 16;
 
-	int locX;
-	int locY;
+	float locX,locY;
 
 private:
 

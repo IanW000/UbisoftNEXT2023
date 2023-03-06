@@ -132,8 +132,8 @@ void GameManager::generateMap() {
 	Mat2D(y, x) = SPACE;
 	Mat2D(y, x - 1) = SPACE;
 
-	m_player.setX(x * GameManager::BLOCK_BRICK_SIZE);
-	m_player.setY(y * GameManager::BLOCK_BRICK_SIZE + 35);
+	m_player.setX((float)x * GameManager::BLOCK_BRICK_SIZE);
+	m_player.setY((float)y * GameManager::BLOCK_BRICK_SIZE + 35);
 	m_player.setLocation();
 
 	int EnemyX = GameManager::COL  - x;
@@ -146,8 +146,8 @@ void GameManager::generateMap() {
 	Mat2D(EnemyY, EnemyX) = SPACE;
 	Mat2D(EnemyY, EnemyX - 1) = SPACE;
 
-	m_enemy.setX(EnemyX * GameManager::BLOCK_BRICK_SIZE);
-	m_enemy.setY(EnemyY * GameManager::BLOCK_BRICK_SIZE + 35);
+	m_enemy.setX((float)EnemyX * GameManager::BLOCK_BRICK_SIZE);
+	m_enemy.setY((float)EnemyY * GameManager::BLOCK_BRICK_SIZE + 35);
 	m_enemy.setLocation();
 
 	for (int i = 0; i < ROW; i++) {

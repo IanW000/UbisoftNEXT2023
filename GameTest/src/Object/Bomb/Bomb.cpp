@@ -253,13 +253,13 @@ void Bomb::Exploding(GameManager& gameManager, float x, float y)
         if (((x > gameManager.m_player.getX() && x - i * 40 < gameManager.m_player.getX()) || (x < gameManager.m_player.getX() && x + i * 40 > gameManager.m_player.getX())) && (abs(y - gameManager.m_player.getY()) < 24)
             || ((y > gameManager.m_player.getY() && y - i * 40 < gameManager.m_player.getY()) || (y < gameManager.m_player.getY() && y + i * 40 > gameManager.m_player.getY())) && (abs(x - gameManager.m_player.getX()) < 24))
         {
-            gameManager.m_player.setHP(20);
+            gameManager.m_player.setHP(5);
             App::PlaySoundW(".\\res\\Sound\\takeDamage.wav");
         }      
         if (((x > gameManager.m_enemy.getX() && x - i * 40 < gameManager.m_enemy.getX()) || (x < gameManager.m_enemy.getX() && x + i * 40 > gameManager.m_enemy.getX())) && (abs(y - gameManager.m_enemy.getY()) < 24)
             || ((y > gameManager.m_enemy.getY() && y - i * 40 < gameManager.m_enemy.getY()) || (y < gameManager.m_enemy.getY() && y + i * 40 > gameManager.m_enemy.getY())) && (abs(x - gameManager.m_enemy.getX()) < 24))
         {
-            gameManager.m_enemy.setHP(20);
+            gameManager.m_enemy.setHP(5);
             App::PlaySoundW(".\\res\\Sound\\takeDamage.wav");
         }
     }

@@ -45,7 +45,7 @@ public:
 	const static int BLOCK_BRICK_SIZE = 32;
 	const static int ROW = WIN_HEIGHT / BLOCK_BRICK_SIZE;
 	const static int COL = WIN_WIDTH / BLOCK_BRICK_SIZE;
-	const static int brickNum = 200;
+	const static int brickNum = 500;
 
 	UI * m_UISettings;
 	Player m_player;

@@ -8,7 +8,7 @@ CSimpleSprite* playerSprite;
 CSimpleSprite* diedSprite;
 
 
-Player::Player() : currentHP(100), isDied(false), locX(-50), locY(-50), speed(1.0f)
+Player::Player() : currentHP(100), isDied(false), locX(0.0f), locY(0.0f), speed(1.0f)
 {
 }
 
@@ -50,7 +50,7 @@ void Player::Update(GameManager& gameManager)
 			float x, y;
 			playerSprite->GetPosition(x, y);
 			if (gameManager.Mat2D((int)(locY - 16.0f) / GameManager::BLOCK_BRICK_SIZE, (int)(locX + 16.0f) / GameManager::BLOCK_BRICK_SIZE) == SPACE) {
-				locX = (int)x;
+				locX = x;
 				x += speed;
 				playerSprite->SetPosition(x, y);
 			}
@@ -63,7 +63,7 @@ void Player::Update(GameManager& gameManager)
 			playerSprite->GetPosition(x, y);
 
 			if (gameManager.Mat2D((int)(locY - 16.0f) / GameManager::BLOCK_BRICK_SIZE, (int)(locX - 16.0f) / GameManager::BLOCK_BRICK_SIZE) == SPACE) {
-				locX = (int)x;
+				locX = x;
 				x -= speed;
 				playerSprite->SetPosition(x, y);
 			}
@@ -77,7 +77,7 @@ void Player::Update(GameManager& gameManager)
 			playerSprite->GetPosition(x, y);
 
 			if (gameManager.Mat2D((int)(locY + 16.0f) / GameManager::BLOCK_BRICK_SIZE, (int)locX / GameManager::BLOCK_BRICK_SIZE) == SPACE) {
-				locY = (int)y;
+				locY = y;
 				y += speed;
 				playerSprite->SetPosition(x, y);
 			}
@@ -91,7 +91,7 @@ void Player::Update(GameManager& gameManager)
 
 			if (gameManager.Mat2D((int)(locY - 25.0f) / GameManager::BLOCK_BRICK_SIZE, (int)locX / GameManager::BLOCK_BRICK_SIZE) == SPACE) {
 
-				locY = (int)y;
+				locY = y;
 				y -= speed;
 
 				playerSprite->SetPosition(x, y);
@@ -107,7 +107,7 @@ void Player::Update(GameManager& gameManager)
 	if (currentHP <= 0) {
 		diedSprite->Update(gameManager.GetDeltaTime());
 		diedSprite->SetAnimation(0);
-		diedSprite->SetPosition((float)locX, (float)locY);
+		diedSprite->SetPosition(locX, locY);
 		currentHP = 0;
 		isDied = true;
 	}
@@ -128,20 +128,20 @@ void Player::Render(GameManager& gameManager)
 	}
 }
 
-int Player::getX()
+float Player::getX()
 {
 	return locX;
 }
 
-int Player::getY()
+float Player::getY()
 {
 	return locY;
 }
-void Player::setX(int x) {
+void Player::setX(float x) {
 	locX = x;
 }
 
-void Player::setY(int y) {
+void Player::setY(float y) {
 	locY = y;
 }
 void Player::setLocation() {
