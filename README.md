@@ -7,7 +7,7 @@
 
 #### "Get ready to blow up everything with Bomberman!"
 
-BOMB! BOMB! BOMB! is a bomberman-like game made in C++ for the Ubisoft NEXT 2021 programming competition.
+BOMB! BOMB! BOMB! is a bomberman-like game made in C++ in 2.5 days for the Ubisoft NEXT 2021 programming competition.
 
 ***[Watch the Gameplay Demo!](https://www.youtube.com/watch?v=oexk9rBuHZE&t=1s)***
 
